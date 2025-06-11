@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.blogmusic.R;
 
 import java.util.ArrayList;
@@ -37,7 +38,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = posts.get(position);
-        holder.imageView.setImageResource(post.getImageResourceId());
         holder.titleTextView.setText(post.getTitle());
         holder.authorTextView.setText(post.getAuthor());
         holder.dateTextView.setText(post.getDate());
@@ -47,6 +47,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 listener.onPostClick(post);
             }
         });
+        Glide.with(holder.itemView.getContext())
+                .load(post.getImageUrl())
+                .placeholder(R.drawable.ic_dashboard_black_24dp)
+                .into(holder.imageView);
     }
 
     @Override

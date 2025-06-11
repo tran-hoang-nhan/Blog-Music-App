@@ -47,44 +47,23 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/newsRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="220dp"
             android:layout_marginTop="8dp"
-            android:nestedScrollingEnabled="false" />
+            android:orientation="horizontal"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            android:layout_marginBottom="8dp"
+            android:scrollbars="horizontal" />
 
-        <TextView
-            android:id="@+id/newMusicTitle"
+        <LinearLayout
+            android:id="@+id/newsIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Music"
-            android:fontFamily="@font/mulish_extrabold"
-            android:textSize="24sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/musicTabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Albums" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Singles" />
-        </com.google.android.material.tabs.TabLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/musicRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
-            android:nestedScrollingEnabled="false" />
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/reviewAlbumTitle"

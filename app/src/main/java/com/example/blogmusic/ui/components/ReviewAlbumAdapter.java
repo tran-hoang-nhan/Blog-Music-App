@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.blogmusic.R;
 
 import java.util.ArrayList;
@@ -36,17 +37,19 @@ public class ReviewAlbumAdapter extends RecyclerView.Adapter<ReviewAlbumAdapter.
     @Override
     public void onBindViewHolder(@NonNull ReviewAlbumViewHolder holder, int position) {
         ReviewAlbum album = reviewAlbums.get(position);
-        holder.imageView.setImageResource(album.getImageResourceId());
+
         holder.titleTextView.setText(album.getTitle());
         holder.artistTextView.setText(album.getArtist());
         holder.ratingTextView.setText(album.getRating());
         holder.dateTextView.setText(album.getReviewDate());
-
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onReviewClick(album);
             }
         });
+        Glide.with(holder.itemView.getContext())
+                .load(album.getImageUrl()) // là URL ảnh (String)
+                .into(holder.imageView);
     }
 
     @Override

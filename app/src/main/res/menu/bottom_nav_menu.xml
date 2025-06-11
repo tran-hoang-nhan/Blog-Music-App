@@ -16,5 +16,8 @@
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile_white"
         android:title="Profile" />
-
+    <item
+        android:id="@+id/navigation_review"
+        android:icon="@drawable/ic_profile_white"
+        android:title="Reviews" />
 </menu>
