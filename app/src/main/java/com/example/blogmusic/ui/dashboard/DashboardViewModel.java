@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.blogmusic.R;
 import com.example.blogmusic.api.ApiService;
 import com.example.blogmusic.network.RetrofitClient;
 import com.example.blogmusic.ui.components.Post;
@@ -25,8 +24,8 @@ public class DashboardViewModel extends ViewModel {
     private final MutableLiveData<List<ReviewAlbum>> reviewList = new MutableLiveData<>();
 
     public DashboardViewModel() {
-        loadPosts();     // Nếu vẫn dùng dummy posts
-        loadReviews();   // Gọi dữ liệu từ API
+        loadPosts();
+        loadReviews();
     }
 
     public LiveData<List<Post>> getPosts() {
@@ -36,13 +35,25 @@ public class DashboardViewModel extends ViewModel {
     public LiveData<List<ReviewAlbum>> getReviews() {
         return reviewList;
     }
-
     private void loadPosts() {
-        List<Post> dummyPosts = new ArrayList<>();
-        dummyPosts.add(new Post(R.drawable.ic_dashboard_black_24dp, "Post 1", "Author 1", "2023-10-01", "a"));
-        dummyPosts.add(new Post(R.drawable.ic_dashboard_black_24dp, "Post 2", "Author 2", "2023-10-02", "a"));
-        dummyPosts.add(new Post(R.drawable.ic_dashboard_black_24dp, "Post 3", "Author 3", "2023-10-03", "a"));
-        posts.setValue(dummyPosts);
+        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
+        Call<List<Post>> call = apiService.getAllPosts(); // GET từ PHP API trả về List<Post>
+
+        call.enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    posts.setValue(response.body());
+                } else {
+                    Log.e("NewsViewModel", "Lỗi lấy dữ liệu bài viết (status: " + response.code() + ")");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+                Log.e("NewsViewModel", "Lỗi mạng hoặc server: " + t.getMessage());
+            }
+        });
     }
 
     private void loadReviews() {

@@ -18,12 +18,6 @@
             tools:layout="@layout/fragment_dashboard" />
 
         <fragment
-            android:id="@+id/navigation_notifications"
-            android:name="com.example.blogmusic.ui.notifications.NotificationsFragment"
-            android:label="@string/title_notifications"
-            tools:layout="@layout/fragment_notifications" />
-
-        <fragment
             android:id="@+id/navigation_profile"
             android:name="com.example.blogmusic.ui.profile.ProfileFragment"
             android:label="Profile"
@@ -34,4 +28,24 @@
             android:name="com.example.blogmusic.ui.review.ReviewFragment"
             android:label="Reviews"
             tools:layout="@layout/fragment_review" />
-    </navigation>
+
+        <fragment
+            android:id="@+id/postDetailFragment"
+            android:name="com.example.blogmusic.ui.news.PostDetailFragment"
+            android:label="Post Detail"
+            tools:layout="@layout/fragment_post_detail">
+            <argument
+                android:name="post_id"
+                app:argType="integer" />
+        </fragment>
+
+        <fragment
+            android:id="@+id/reviewDetailFragment"
+            android:name="com.example.blogmusic.ui.review.ReviewAlbumDetailFragment"
+            android:label="Review Detail"
+            tools:layout="@layout/fragment_review_detail">
+            <argument
+                android:name="review_id"
+                app:argType="integer" />
+        </fragment>
+</navigation>

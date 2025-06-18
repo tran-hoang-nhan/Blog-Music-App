@@ -20,6 +20,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private List<Post> posts = new ArrayList<>();
     private final OnPostClickListener listener;
 
+    // Interface để xử lý click
     public interface OnPostClickListener {
         void onPostClick(Post post);
     }
@@ -41,16 +42,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.titleTextView.setText(post.getTitle());
         holder.authorTextView.setText(post.getAuthor());
         holder.dateTextView.setText(post.getDate());
-        
+
+        // Xử lý click
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onPostClick(post);
             }
         });
-        Glide.with(holder.itemView.getContext())
-                .load(post.getImageUrl())
-                .placeholder(R.drawable.ic_dashboard_black_24dp)
-                .into(holder.imageView);
+
+        String thumbnailUrl = post.getImageCover();
+        if (thumbnailUrl != null && !thumbnailUrl.isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                    .load(thumbnailUrl)
+                    .into(holder.imageView);
+        } else {
+            holder.imageView.setImageResource(R.drawable.ic_dashboard_black_24dp);
+        }
     }
 
     @Override
@@ -77,4 +84,4 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             dateTextView = itemView.findViewById(R.id.dateTextView);
         }
     }
-} 
+}

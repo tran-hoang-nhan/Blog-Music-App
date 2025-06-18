@@ -30,7 +30,8 @@ public class ReviewAlbumAdapter extends RecyclerView.Adapter<ReviewAlbumAdapter.
     @NonNull
     @Override
     public ReviewAlbumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review_album, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_review_album, parent, false);
         return new ReviewAlbumViewHolder(view);
     }
 
@@ -38,18 +39,20 @@ public class ReviewAlbumAdapter extends RecyclerView.Adapter<ReviewAlbumAdapter.
     public void onBindViewHolder(@NonNull ReviewAlbumViewHolder holder, int position) {
         ReviewAlbum album = reviewAlbums.get(position);
 
-        holder.titleTextView.setText(album.getTitle());
+        holder.titleTextView.setText(album.getAlbumTitle());
         holder.artistTextView.setText(album.getArtist());
         holder.ratingTextView.setText(album.getRating());
         holder.dateTextView.setText(album.getReviewDate());
+
+        Glide.with(holder.itemView.getContext())
+                .load(album.getImageCover())
+                .into(holder.imageView);
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onReviewClick(album);
             }
         });
-        Glide.with(holder.itemView.getContext())
-                .load(album.getImageUrl()) // là URL ảnh (String)
-                .into(holder.imageView);
     }
 
     @Override
@@ -78,4 +81,4 @@ public class ReviewAlbumAdapter extends RecyclerView.Adapter<ReviewAlbumAdapter.
             dateTextView = itemView.findViewById(R.id.reviewDate);
         }
     }
-} 
+}

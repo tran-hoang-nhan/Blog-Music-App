@@ -11,9 +11,9 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,18 +31,24 @@ public class DashboardFragment extends Fragment {
     private ReviewAlbumAdapter reviewAlbumAdapter;
     private final Handler autoScrollHandler = new Handler();
     private int currentPosition = 0;
-    private LinearLayout newsIndicatorLayout;
+    private LinearLayout newsIndicatorLayout, reviewIndicatorLayout;
 
     private final Runnable autoScrollRunnable = new Runnable() {
         @Override
         public void run() {
-            int itemCount = postAdapter.getItemCount();
-            if (itemCount == 0) return;
+            int postCount = postAdapter.getItemCount();
+            int reviewCount = reviewAlbumAdapter.getItemCount();
 
-            currentPosition = (currentPosition + 1) % itemCount;
-            binding.newsRecyclerView.smoothScrollToPosition(currentPosition);
+            if (postCount > 0) {
+                currentPosition = (currentPosition + 1) % postCount;
+                binding.newsRecyclerView.smoothScrollToPosition(currentPosition);
+            }
 
-            autoScrollHandler.postDelayed(this, 3000); // Trượt mỗi 3 giây
+            if (reviewCount > 0) {
+                binding.reviewAlbumRecyclerView.smoothScrollToPosition(currentPosition % reviewCount);
+            }
+
+            autoScrollHandler.postDelayed(this, 3000);
         }
     };
     @Override
@@ -56,40 +62,49 @@ public class DashboardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         newsIndicatorLayout = binding.newsIndicator;
+        reviewIndicatorLayout = binding.reviewIndicator;
         setupRecyclerViews();
         observeViewModel();
         setupClickListeners();
     }
-
     private void setupRecyclerViews() {
+        NavController navController = NavHostFragment.findNavController(this);
         postAdapter = new PostAdapter(post -> {
-            // TODO: Navigate to post detail
+            Bundle bundle = new Bundle();
+            bundle.putInt("post_id", post.getId());  // Đảm bảo có getId()
+            navController.navigate(R.id.postDetailFragment, bundle);
         });
         binding.newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
         binding.newsRecyclerView.setAdapter(postAdapter);
-
-        PagerSnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(binding.newsRecyclerView);
+        PagerSnapHelper newsSnapHelper = new PagerSnapHelper();
+        newsSnapHelper.attachToRecyclerView(binding.newsRecyclerView);
 
         reviewAlbumAdapter = new ReviewAlbumAdapter(review -> {
-            // TODO: Navigate to review detail
+            Bundle bundle = new Bundle();
+            bundle.putInt("review_id", review.getId());  // Đảm bảo có getId()
+            navController.navigate(R.id.reviewDetailFragment, bundle);
         });
-        binding.reviewAlbumRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.reviewAlbumRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.reviewAlbumRecyclerView.setAdapter(reviewAlbumAdapter);
+        PagerSnapHelper ReviewAlbumSnapHelper= new PagerSnapHelper();
+        ReviewAlbumSnapHelper.attachToRecyclerView(binding.reviewAlbumRecyclerView);
     }
 
     private void observeViewModel() {
         dashboardViewModel.getPosts().observe(getViewLifecycleOwner(), posts -> {
             postAdapter.submitList(posts);
             setupNewsIndicators(posts.size());
+
             currentPosition = 0;
             autoScrollHandler.removeCallbacks(autoScrollRunnable);
             autoScrollHandler.postDelayed(autoScrollRunnable, 3000);
         });
         dashboardViewModel.getReviews().observe(getViewLifecycleOwner(), reviewAlbums -> {
             reviewAlbumAdapter.submitList(reviewAlbums);
+            setupReviewIndicators(reviewAlbums.size());
         });
     }
+
     private void setupNewsIndicators(int count) {
         newsIndicatorLayout.removeAllViews();
         for (int i = 0; i < count; i++) {
@@ -116,6 +131,31 @@ public class DashboardFragment extends Fragment {
             }
         });
     }
+    private void setupReviewIndicators(int count) {
+        reviewIndicatorLayout.removeAllViews();
+        for (int i = 0; i < count; i++) {
+            ImageView dot = new ImageView(getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(8, 0, 8, 0);
+            dot.setLayoutParams(params);
+            dot.setImageResource(i == 0 ? R.drawable.dot_active : R.drawable.dot_inactive);
+            reviewIndicatorLayout.addView(dot);
+        }
+
+        binding.reviewAlbumRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if (layoutManager != null) {
+                    int visiblePosition = layoutManager.findFirstVisibleItemPosition();
+                    updateReviewIndicator(visiblePosition);
+                }
+            }
+        });
+    }
     private void updateNewsIndicator(int index) {
         int childCount = newsIndicatorLayout.getChildCount();
         for (int i = 0; i < childCount; i++) {
@@ -123,7 +163,13 @@ public class DashboardFragment extends Fragment {
             dot.setImageResource(i == index ? R.drawable.dot_active : R.drawable.dot_inactive);
         }
     }
-
+    private void updateReviewIndicator(int index) {
+        int childCount = reviewIndicatorLayout.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            ImageView dot = (ImageView) reviewIndicatorLayout.getChildAt(i);
+            dot.setImageResource(i == index ? R.drawable.dot_active : R.drawable.dot_inactive);
+        }
+    }
     private void setupClickListeners() {
         binding.viewAllNews.setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigate(R.id.navigation_news);
