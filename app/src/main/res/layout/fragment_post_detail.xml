@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/postScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post Title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Author & Date -->
+        <TextView
+            android:id="@+id/authorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Author"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginBottom="2dp" />
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Subtitle Section -->
+        <TextView
+            android:id="@+id/postSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subtitle"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:id="@+id/subtitleMediaContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <!-- Introduction Section -->
+        <TextView
+            android:id="@+id/postIntro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Introduction"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:id="@+id/introMediaContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <!-- Main Content Section -->
+        <TextView
+            android:id="@+id/postMainContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Main Content"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:id="@+id/mainMediaContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <!-- Conclusion Section -->
+        <TextView
+            android:id="@+id/postConclusion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Conclusion"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:id="@+id/conclusionMediaContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <!-- Tags Section -->
+        <TextView
+            android:id="@+id/postTags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tags"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textStyle="italic"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:id="@+id/tagsMediaContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
