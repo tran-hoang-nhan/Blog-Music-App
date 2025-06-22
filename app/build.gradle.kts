@@ -45,13 +45,15 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation (libs.glide)
-
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
     implementation (libs.logging.interceptor)
     implementation (libs.gson)
     implementation (libs.glide)
-
+    implementation(libs.media3.common)
+    implementation (libs.media3.ui)
+    implementation (libs.media3.exoplayer)
+    implementation (libs.core)
     annotationProcessor (libs.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

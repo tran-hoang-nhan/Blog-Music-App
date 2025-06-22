@@ -4,12 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.blogmusic.R;
 import com.example.blogmusic.ui.components.Post;
 import com.example.blogmusic.ui.components.PostAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.blogmusic.databinding.FragmentNewsBinding;
@@ -30,10 +34,12 @@ public class NewsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentNewsBinding.inflate(inflater, container, false);
 
+        NavController navController = NavHostFragment.findNavController(this);
         postAdapter = new PostAdapter(post -> {
-            // TODO: Xử lý click bài viết nếu cần
+            Bundle bundle = new Bundle();
+            bundle.putInt("post_id", post.getId());  // Đảm bảo có getId()
+            navController.navigate(R.id.postDetailFragment, bundle);
         });
-
         binding.newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.newsRecyclerView.setAdapter(postAdapter);
 
