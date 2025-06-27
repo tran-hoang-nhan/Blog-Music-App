@@ -5,20 +5,28 @@ import java.util.Map;
 
 public class ReviewAlbumDetail {
     private int reviewId;
+    private String album_title;
+    private String image_cover;
     private String subtitle;
     private String summary;
     private String tracklist;
     private String main_content;
     private int score;
+    private String artist;
+    private String release_date;
     private String conclusion;
     private String tags;
     private Map<String, List<Media>> media;
 
-    public ReviewAlbumDetail(int reviewId, String subtitle, String summary, String tracklist, String main_content, int score, String conclusion, String tags, Map<String, List<Media>> media) {
+    public ReviewAlbumDetail(int reviewId, String album_title, String image_cover, String subtitle, String summary, String tracklist, String release_date, String artist,String main_content, int score, String conclusion, String tags, Map<String, List<Media>> media) {
         this.reviewId = reviewId;
+        this.album_title = album_title;
+        this.image_cover = image_cover;
         this.subtitle = subtitle;
         this.summary = summary;
         this.tracklist = tracklist;
+        this.artist = artist;
+        this.release_date = release_date;
         this.main_content = main_content;
         this.score = score;
         this.conclusion = conclusion;
@@ -26,10 +34,14 @@ public class ReviewAlbumDetail {
         this.media = media;
     }
 
-    public int getReviewId() { return reviewId; }
+    public int  getReviewId() { return reviewId; }
+    public String getAlbumTitle() { return album_title;}
+    public String getImageCover() { return image_cover; }
     public String getSubtitle() { return subtitle; }
     public String getSummary() { return summary; }
     public String getTracklist() { return tracklist; }
+    public String getArtist() { return artist; }
+    public String getReleaseDate() { return release_date; }
     public String getMain_content() { return main_content; }
     public int getScore() { return score; }
     public String getConclusion() { return conclusion; }

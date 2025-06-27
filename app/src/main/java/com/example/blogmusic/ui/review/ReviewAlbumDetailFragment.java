@@ -2,6 +2,7 @@ package com.example.blogmusic.ui.review;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
 import com.bumptech.glide.Glide;
 import com.example.blogmusic.R;
 import com.example.blogmusic.api.ApiService;
 import com.example.blogmusic.network.RetrofitClient;
 import com.example.blogmusic.ui.components.Media;
 import com.example.blogmusic.ui.components.ReviewAlbumDetail;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -33,10 +36,12 @@ import retrofit2.Response;
 
 public class ReviewAlbumDetailFragment extends Fragment {
 
-    private TextView subtitleTextView, summaryTextView, tracklistTextView,
-            main_contentTextView, scoreTextView, conclusionTextView, tagsTextView;
+    private TextView albumTitleTextView, subtitleTextView, artistTextView, releaseDateTextView, ratingCircleTextView;
+    private ShapeableImageView imagecoverImageView;
+    private TextView summaryTextView, tracklistTextView,
+            mainContentTextView, scoreTextView, conclusionTextView, tagsTextView;
 
-    private LinearLayout subtitleMediaContainer, summaryMediaContainer,
+    private LinearLayout summaryMediaContainer,
             tracklistMediaContainer, mainMediaContainer, conclusionMediaContainer, tagsMediaContainer;
 
     @Nullable
@@ -45,26 +50,34 @@ public class ReviewAlbumDetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review_detail, container, false);
 
-        // Ánh xạ TextView
+        // Ánh xạ các view phần đầu album
+        albumTitleTextView = view.findViewById(R.id.albumTitle);
+        artistTextView = view.findViewById(R.id.albumArtist);
+        releaseDateTextView = view.findViewById(R.id.releaseDate);
+        ratingCircleTextView = view.findViewById(R.id.scoreTextView);
+        imagecoverImageView = view.findViewById(R.id.imageView);
+
+        // Các phần review chi tiết
         subtitleTextView = view.findViewById(R.id.detailSubtitle);
         summaryTextView = view.findViewById(R.id.detailSummary);
         tracklistTextView = view.findViewById(R.id.detailTracklist);
-        main_contentTextView = view.findViewById(R.id.detailMaincontent);
+        mainContentTextView = view.findViewById(R.id.detailMaincontent);
         scoreTextView = view.findViewById(R.id.detailScore);
         conclusionTextView = view.findViewById(R.id.detailConclusion);
         tagsTextView = view.findViewById(R.id.detailTags);
 
-        // Ánh xạ LinearLayout chứa media
-        subtitleMediaContainer = view.findViewById(R.id.subtitleMediaContainer);
+        // Media containers
         summaryMediaContainer = view.findViewById(R.id.summaryMediaContainer);
         tracklistMediaContainer = view.findViewById(R.id.tracklistMediaContainer);
         mainMediaContainer = view.findViewById(R.id.mainMediaContainer);
         conclusionMediaContainer = view.findViewById(R.id.conclusionMediaContainer);
         tagsMediaContainer = view.findViewById(R.id.tagsMediaContainer);
 
+        // Gọi dữ liệu
         Bundle args = getArguments();
         if (args != null && args.containsKey("review_id")) {
             int reviewId = args.getInt("review_id");
+            increaseViews("review", reviewId);
             fetchReviewDetail(reviewId);
         }
 
@@ -80,6 +93,17 @@ public class ReviewAlbumDetailFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     ReviewAlbumDetail detail = response.body();
 
+                    // Album info section
+                    albumTitleTextView.setText(detail.getAlbumTitle());
+                    artistTextView.setText(detail.getArtist());
+                    releaseDateTextView.setText("Released: " + detail.getReleaseDate());
+                    ratingCircleTextView.setText(String.valueOf(detail.getScore()));
+                    Glide.with(requireContext())
+                            .load(detail.getImageCover()) // Đường dẫn hình ảnh từ response
+                            .placeholder(R.drawable.ic_dashboard_black_24dp)
+                            .into(imagecoverImageView);
+
+                    // Nội dung review
                     subtitleTextView.setText(detail.getSubtitle());
                     summaryTextView.setText(detail.getSummary());
 
@@ -90,14 +114,13 @@ public class ReviewAlbumDetailFragment extends Fragment {
                     }
                     tracklistTextView.setText(formatted.toString().trim());
 
-                    main_contentTextView.setText(detail.getMain_content());
+                    mainContentTextView.setText(detail.getMain_content());
                     scoreTextView.setText(String.valueOf(detail.getScore()));
                     conclusionTextView.setText(detail.getConclusion());
                     tagsTextView.setText("Tags: " + detail.getTags());
 
                     Map<String, List<Media>> mediaMap = detail.getMedia();
                     if (mediaMap != null) {
-                        addMediaToSection(mediaMap.get("subtitle"), subtitleMediaContainer);
                         addMediaToSection(mediaMap.get("summary"), summaryMediaContainer);
                         addMediaToSection(mediaMap.get("tracklist"), tracklistMediaContainer);
                         addMediaToSection(mediaMap.get("main_content"), mainMediaContainer);
@@ -162,4 +185,24 @@ public class ReviewAlbumDetailFragment extends Fragment {
         }
         return "";
     }
+
+    public void increaseViews(String type, int id) {
+        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
+        apiService.increaseViews(type, id).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Views", "Increased view for " + type + " id " + id);
+                } else {
+                    Log.e("Views", "Failed to increase view: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                Log.e("Views", "Network error: " + t.getMessage());
+            }
+        });
+    }
 }
+

@@ -16,22 +16,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewAlbumAdapter extends RecyclerView.Adapter<ReviewAlbumAdapter.ReviewAlbumViewHolder> {
+
+    public enum ReviewLayoutType {
+        GRID,
+        LIST
+    }
+
     private List<ReviewAlbum> reviewAlbums = new ArrayList<>();
     private final OnReviewClickListener listener;
+    private final ReviewLayoutType layoutType;
 
     public interface OnReviewClickListener {
         void onReviewClick(ReviewAlbum review);
     }
 
-    public ReviewAlbumAdapter(OnReviewClickListener listener) {
+    public ReviewAlbumAdapter(OnReviewClickListener listener, ReviewLayoutType layoutType) {
         this.listener = listener;
+        this.layoutType = layoutType;
     }
 
     @NonNull
     @Override
     public ReviewAlbumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_review_album, parent, false);
+        int layoutRes = (layoutType == ReviewLayoutType.LIST)
+                ? R.layout.item_review_all
+                : R.layout.item_review_album;
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutRes, parent, false);
         return new ReviewAlbumViewHolder(view);
     }
 
@@ -39,10 +50,22 @@ public class ReviewAlbumAdapter extends RecyclerView.Adapter<ReviewAlbumAdapter.
     public void onBindViewHolder(@NonNull ReviewAlbumViewHolder holder, int position) {
         ReviewAlbum album = reviewAlbums.get(position);
 
-        holder.titleTextView.setText(album.getAlbumTitle());
+        holder.albumTitleTextView.setText(album.getAlbumTitle());
         holder.artistTextView.setText(album.getArtist());
-        holder.ratingTextView.setText(album.getRating());
-        holder.dateTextView.setText(album.getReviewDate());
+
+        if (holder.reviewDateTextView != null) {
+            holder.reviewDateTextView.setText(album.getReviewDate());
+        }
+        if (holder.ratingTextView != null) {
+            holder.ratingTextView.setText(album.getRating());
+        }
+        if (holder.viewsTextView != null) {
+            holder.viewsTextView.setText("👁 " + album.getViews());
+        }
+        if (holder.favoritesTextView != null) {
+            holder.favoritesTextView.setText("❤️ " + album.getFavorites());
+        }
+
 
         Glide.with(holder.itemView.getContext())
                 .load(album.getImageCover())
@@ -61,24 +84,24 @@ public class ReviewAlbumAdapter extends RecyclerView.Adapter<ReviewAlbumAdapter.
     }
 
     public void submitList(List<ReviewAlbum> newList) {
-        this.reviewAlbums = newList;
+        this.reviewAlbums = new ArrayList<>(newList);
         notifyDataSetChanged();
     }
 
     static class ReviewAlbumViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView titleTextView;
-        TextView artistTextView;
-        TextView ratingTextView;
-        TextView dateTextView;
+        TextView albumTitleTextView, artistTextView, reviewDateTextView;
+        TextView ratingTextView, viewsTextView, favoritesTextView;
 
         ReviewAlbumViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.reviewImage);
-            titleTextView = itemView.findViewById(R.id.reviewTitle);
-            artistTextView = itemView.findViewById(R.id.reviewArtist);
-            ratingTextView = itemView.findViewById(R.id.reviewRating);
-            dateTextView = itemView.findViewById(R.id.reviewDate);
+            imageView = itemView.findViewById(R.id.imageView);
+            albumTitleTextView = itemView.findViewById(R.id.albumTitleTextView);
+            artistTextView = itemView.findViewById(R.id.artistTextView);
+            reviewDateTextView = itemView.findViewById(R.id.reviewDateTextView);
+            ratingTextView = itemView.findViewById(R.id.scoreTextView);
+            viewsTextView = itemView.findViewById(R.id.viewsTextView);
+            favoritesTextView = itemView.findViewById(R.id.favoritesTextView);
         }
     }
 }

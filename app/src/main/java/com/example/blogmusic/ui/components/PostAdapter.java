@@ -17,47 +17,64 @@ import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
+    public enum PostLayoutType {
+        GRID,
+        LIST
+    }
+
     private List<Post> posts = new ArrayList<>();
     private final OnPostClickListener listener;
+    private final PostLayoutType layoutType;
 
-    // Interface để xử lý click
     public interface OnPostClickListener {
         void onPostClick(Post post);
     }
 
-    public PostAdapter(OnPostClickListener listener) {
+    public PostAdapter(OnPostClickListener listener, PostLayoutType layoutType) {
         this.listener = listener;
+        this.layoutType = layoutType;
     }
 
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post, parent, false);
+        int layoutRes = (layoutType == PostLayoutType.LIST)
+                ? R.layout.item_post_all
+                : R.layout.item_post;
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutRes, parent, false);
         return new PostViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = posts.get(position);
+
         holder.titleTextView.setText(post.getTitle());
-        holder.authorTextView.setText(post.getAuthor());
+        holder.authorTextView.setText("By: " + post.getAuthor());
         holder.dateTextView.setText(post.getDate());
 
-        // Xử lý click
+        if (holder.viewsTextView != null) {
+            holder.viewsTextView.setText("👁 " + post.getViews());
+        }
+
+        if (holder.favoritesTextView != null) {
+            holder.favoritesTextView.setText("❤️ " + post.getFavorites());
+        }
+
+        if (post.getImageCover() != null && !post.getImageCover().isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                    .load(post.getImageCover())
+                    .into(holder.imageView);
+        } else {
+            holder.imageView.setImageResource(R.drawable.ic_dashboard_black_24dp);
+        }
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onPostClick(post);
             }
         });
-
-        String thumbnailUrl = post.getImageCover();
-        if (thumbnailUrl != null && !thumbnailUrl.isEmpty()) {
-            Glide.with(holder.itemView.getContext())
-                    .load(thumbnailUrl)
-                    .into(holder.imageView);
-        } else {
-            holder.imageView.setImageResource(R.drawable.ic_dashboard_black_24dp);
-        }
     }
 
     @Override
@@ -72,16 +89,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView titleTextView;
-        TextView authorTextView;
-        TextView dateTextView;
+        TextView titleTextView, authorTextView, dateTextView;
+        TextView viewsTextView, favoritesTextView; // optional
 
-        PostViewHolder(View itemView) {
+        PostViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
             authorTextView = itemView.findViewById(R.id.authorTextView);
             dateTextView = itemView.findViewById(R.id.dateTextView);
+
+            // Chỉ có ở item_post_all.xml
+            viewsTextView = itemView.findViewById(R.id.viewsTextView);
+            favoritesTextView = itemView.findViewById(R.id.favoritesTextView);
         }
     }
 }

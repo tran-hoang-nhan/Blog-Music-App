@@ -17,6 +17,7 @@ navigationFragment = "2.9.0"
 navigationUi = "2.9.0"
 retrofit = "2.9.0"
 media3Common = "1.7.1"
+volley = "1.2.1"
 
 [libraries]
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
@@ -39,6 +40,7 @@ navigation-fragment = { group = "androidx.navigation", name = "navigation-fragme
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 media3-common = { group = "androidx.media3", name = "media3-common", version.ref = "media3Common" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

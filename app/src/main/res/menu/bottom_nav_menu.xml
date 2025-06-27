@@ -9,11 +9,11 @@
         android:icon="@drawable/ic_newspaper_white"
         android:title="News" />
     <item
+        android:id="@+id/navigation_review"
+        android:icon="@drawable/ic_review_white"
+        android:title="Reviews" />
+    <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile_white"
         android:title="Profile" />
-    <item
-        android:id="@+id/navigation_review"
-        android:icon="@drawable/ic_profile_white"
-        android:title="Reviews" />
 </menu>

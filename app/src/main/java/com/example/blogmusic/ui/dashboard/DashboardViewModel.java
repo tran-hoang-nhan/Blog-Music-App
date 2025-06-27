@@ -2,6 +2,7 @@ package com.example.blogmusic.ui.dashboard;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -39,9 +40,9 @@ public class DashboardViewModel extends ViewModel {
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
         Call<List<Post>> call = apiService.getAllPosts(); // GET từ PHP API trả về List<Post>
 
-        call.enqueue(new Callback<List<Post>>() {
+        call.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+            public void onResponse(@NonNull Call<List<Post>> call, @NonNull Response<List<Post>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     posts.setValue(response.body());
                 } else {
@@ -50,7 +51,7 @@ public class DashboardViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Post>> call, @NonNull Throwable t) {
                 Log.e("NewsViewModel", "Lỗi mạng hoặc server: " + t.getMessage());
             }
         });
@@ -60,9 +61,9 @@ public class DashboardViewModel extends ViewModel {
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
         Call<List<ReviewAlbum>> call = apiService.getReviews();
 
-        call.enqueue(new Callback<List<ReviewAlbum>>() {
+        call.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<List<ReviewAlbum>> call, Response<List<ReviewAlbum>> response) {
+            public void onResponse(@NonNull Call<List<ReviewAlbum>> call, @NonNull Response<List<ReviewAlbum>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<ReviewAlbum> data = response.body();
                     reviewList.setValue(data);
@@ -75,7 +76,7 @@ public class DashboardViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<List<ReviewAlbum>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<ReviewAlbum>> call, @NonNull Throwable t) {
                 Log.e("DEBUG", "Lỗi khi gọi API: " + t.getMessage());
                 reviewList.setValue(new ArrayList<>());
             }

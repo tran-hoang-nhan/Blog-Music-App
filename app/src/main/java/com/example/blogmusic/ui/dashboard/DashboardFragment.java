@@ -73,7 +73,7 @@ public class DashboardFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putInt("post_id", post.getId());  // Đảm bảo có getId()
             navController.navigate(R.id.postDetailFragment, bundle);
-        });
+        }, PostAdapter.PostLayoutType.GRID);
         binding.newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
         binding.newsRecyclerView.setAdapter(postAdapter);
         PagerSnapHelper newsSnapHelper = new PagerSnapHelper();
@@ -83,7 +83,7 @@ public class DashboardFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putInt("review_id", review.getId());  // Đảm bảo có getId()
             navController.navigate(R.id.reviewDetailFragment, bundle);
-        });
+        }, ReviewAlbumAdapter.ReviewLayoutType.GRID);
         binding.reviewAlbumRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.reviewAlbumRecyclerView.setAdapter(reviewAlbumAdapter);
         PagerSnapHelper ReviewAlbumSnapHelper= new PagerSnapHelper();

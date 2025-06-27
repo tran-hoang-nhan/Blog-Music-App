@@ -14,35 +14,50 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import java.util.List;
+import java.util.Map;
 
 import com.bumptech.glide.Glide;
 import com.example.blogmusic.R;
 import com.example.blogmusic.api.ApiService;
 import com.example.blogmusic.network.RetrofitClient;
 import com.example.blogmusic.ui.components.Media;
+import com.example.blogmusic.ui.components.Post;
+import com.example.blogmusic.ui.components.PostAdapter;
 import com.example.blogmusic.ui.components.PostDetail;
+import com.example.blogmusic.ui.components.PostResponse;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
-
-import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PostDetailFragment extends Fragment {
-
+    private NavController navController;
     private TextView titleTextView, authorTextView, dateTextView;
-    private TextView subtitleTextView, introTextView, mainContentTextView, conclusionTextView, tagsTextView;
+    private TextView subtitleTextView, introTextView, mainContentTextView, conclusionTextView, tagsTextView, relatedPostsLabel;
     private LinearLayout subtitleMediaContainer, introMediaContainer, mainMediaContainer, conclusionMediaContainer, tagsMediaContainer;
+    private PostAdapter postAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_post_detail, container, false);
+        return inflater.inflate(R.layout.fragment_post_detail, container, false);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        navController = Navigation.findNavController(view);
+
+        // Khởi tạo view
         titleTextView = view.findViewById(R.id.titleTextView);
         authorTextView = view.findViewById(R.id.authorTextView);
         dateTextView = view.findViewById(R.id.dateTextView);
@@ -52,6 +67,16 @@ public class PostDetailFragment extends Fragment {
         mainContentTextView = view.findViewById(R.id.postMainContent);
         conclusionTextView = view.findViewById(R.id.postConclusion);
         tagsTextView = view.findViewById(R.id.postTags);
+        relatedPostsLabel = view.findViewById(R.id.relatedPostsLabel);
+
+        RecyclerView relatedPostsRecyclerView = view.findViewById(R.id.relatedPostsRecyclerView);
+        relatedPostsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        postAdapter = new PostAdapter(post -> {
+            Bundle args = new Bundle();
+            args.putInt("id", post.getId());
+            navController.navigate(R.id.postDetailFragment, args);
+        }, PostAdapter.PostLayoutType.GRID);
+        relatedPostsRecyclerView.setAdapter(postAdapter);
 
         subtitleMediaContainer = view.findViewById(R.id.subtitleMediaContainer);
         introMediaContainer = view.findViewById(R.id.introMediaContainer);
@@ -62,11 +87,11 @@ public class PostDetailFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null && args.containsKey("post_id")) {
             int postId = args.getInt("post_id");
+            increaseViews("post", postId);
             fetchPostDetail(postId);
         }
-
-        return view;
     }
+
 
     private void fetchPostDetail(int postId) {
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
@@ -85,6 +110,8 @@ public class PostDetailFragment extends Fragment {
                     mainContentTextView.setText(detail.getMainContent());
                     conclusionTextView.setText(detail.getConclusion());
                     tagsTextView.setText(detail.getTags());
+
+                    fetchRelatedPosts(detail.getAuthor(), postId);
 
                     Map<String, List<Media>> mediaMap = detail.getMedia();
                     if (mediaMap != null) {
@@ -106,7 +133,26 @@ public class PostDetailFragment extends Fragment {
             }
         });
     }
+    private void fetchRelatedPosts(String author, int postId) {
+        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
+        apiService.getRelatedPosts(author, postId).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<PostResponse> call, @NonNull Response<PostResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Post> relatedPosts = response.body().getPosts();
+                    if (!relatedPosts.isEmpty()) {
+                        relatedPostsLabel.setVisibility(View.VISIBLE);
+                        postAdapter.submitList(relatedPosts);
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(@NonNull Call<PostResponse> call, @NonNull Throwable t) {
+                Log.e("RelatedPosts", "Error: " + t.getMessage());
+            }
+        });
+    }
     private void addMediaToSection(List<Media> mediaList, LinearLayout sectionLayout) {
         if (mediaList == null || mediaList.isEmpty()) return;
 
@@ -152,5 +198,24 @@ public class PostDetailFragment extends Fragment {
             return Uri.parse(url).getLastPathSegment();
         }
         return "";
+    }
+    public void increaseViews(String type, int id) {
+        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
+        apiService.increaseViews(type, id).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                // Optional: Log success
+                if (response.isSuccessful()) {
+                    Log.d("Views", "Increased view for " + type + " id " + id);
+                } else {
+                    Log.e("Views", "Failed to increase view: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                Log.e("Views", "Network error: " + t.getMessage());
+            }
+        });
     }
 }
