@@ -6,7 +6,6 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -31,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        // Bottom Navigation handling
         binding.navView.setOnItemSelectedListener(item -> {
             int destinationId = item.getItemId();
             if (navController.getCurrentDestination() != null &&
@@ -43,14 +41,12 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        // SearchView setup
         setupSearchView();
-        // Ẩn SearchView ở một số fragment nhất định
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.navigation_profile) {
-                binding.searchView.setVisibility(View.GONE);
+                binding.searchBarContainer.setVisibility(View.GONE);
             } else {
-                binding.searchView.setVisibility(View.VISIBLE);
+                binding.searchBarContainer.setVisibility(View.VISIBLE);
             }
         });
 

@@ -2,6 +2,7 @@ package com.example.blogmusic.ui.news;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -19,51 +20,34 @@ import retrofit2.Response;
 public class NewsViewModel extends ViewModel {
 
     private final MutableLiveData<List<Post>> postsLiveData = new MutableLiveData<>();
+    private final ApiService apiService;
+
+    public NewsViewModel() {
+        apiService = RetrofitClient.getInstance().create(ApiService.class);
+    }
 
     public LiveData<List<Post>> getPosts() {
         return postsLiveData;
     }
 
-    public void fetchAllPosts() {
-        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-        Call<List<Post>> call = apiService.getAllPosts(); // gọi API all
 
-        call.enqueue(new Callback<List<Post>>() {
+    public void fetchPostsBySort(String sortType) {
+        Call<List<Post>> call = apiService.getPostsBySort(sortType);
+
+        call.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+            public void onResponse(@NonNull Call<List<Post>> call, @NonNull Response<List<Post>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     postsLiveData.setValue(response.body());
                 } else {
-                    Log.e("NewsViewModel", "Lỗi lấy bài viết (All) - code: " + response.code());
+                    Log.e("NewsViewModel", "Lỗi lấy bài viết (" + sortType + ") - code: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
-                Log.e("NewsViewModel", "Lỗi mạng (All): " + t.getMessage());
+            public void onFailure(@NonNull Call<List<Post>> call, @NonNull Throwable t) {
+                Log.e("NewsViewModel", "Lỗi mạng (" + sortType + "): " + t.getMessage());
             }
         });
     }
-
-    public void fetchRecentPosts() {
-        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-        Call<List<Post>> call = apiService.getRecentPosts(); // gọi API recent
-
-        call.enqueue(new Callback<List<Post>>() {
-            @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    postsLiveData.setValue(response.body());
-                } else {
-                    Log.e("NewsViewModel", "Lỗi lấy bài viết (Recent) - code: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
-                Log.e("NewsViewModel", "Lỗi mạng (Recent): " + t.getMessage());
-            }
-        });
-    }
-
 }

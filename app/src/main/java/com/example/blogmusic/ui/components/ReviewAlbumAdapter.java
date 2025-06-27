@@ -53,6 +53,10 @@ public class ReviewAlbumAdapter extends RecyclerView.Adapter<ReviewAlbumAdapter.
         holder.albumTitleTextView.setText(album.getAlbumTitle());
         holder.artistTextView.setText(album.getArtist());
 
+        if (holder.releaseDateTextView != null) {
+            holder.releaseDateTextView.setText(album.getReleaseDate());
+        }
+
         if (holder.reviewDateTextView != null) {
             holder.reviewDateTextView.setText(album.getReviewDate());
         }
@@ -90,7 +94,7 @@ public class ReviewAlbumAdapter extends RecyclerView.Adapter<ReviewAlbumAdapter.
 
     static class ReviewAlbumViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView albumTitleTextView, artistTextView, reviewDateTextView;
+        TextView albumTitleTextView, artistTextView, reviewDateTextView, releaseDateTextView;
         TextView ratingTextView, viewsTextView, favoritesTextView;
 
         ReviewAlbumViewHolder(View itemView) {
@@ -98,6 +102,7 @@ public class ReviewAlbumAdapter extends RecyclerView.Adapter<ReviewAlbumAdapter.
             imageView = itemView.findViewById(R.id.imageView);
             albumTitleTextView = itemView.findViewById(R.id.albumTitleTextView);
             artistTextView = itemView.findViewById(R.id.artistTextView);
+            releaseDateTextView = itemView.findViewById(R.id.releaseDateTextView);
             reviewDateTextView = itemView.findViewById(R.id.reviewDateTextView);
             ratingTextView = itemView.findViewById(R.id.scoreTextView);
             viewsTextView = itemView.findViewById(R.id.viewsTextView);

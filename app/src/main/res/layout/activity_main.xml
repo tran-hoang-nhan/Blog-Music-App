@@ -18,7 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- BottomNavigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
@@ -38,19 +37,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:background="?attr/colorOnSecondary"
-        app:itemTextColor="@color/white"
+        android:background="@drawable/bg_search_container"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="12dp">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:queryHint="Tìm kiếm bài viết..."
+            android:queryHint="Tìm kiếm bài viết..."
             android:iconifiedByDefault="false"
+            android:background="@android:color/transparent"
             app:searchIcon="@drawable/ic_search"
             app:closeIcon="@drawable/ic_close" />
     </LinearLayout>

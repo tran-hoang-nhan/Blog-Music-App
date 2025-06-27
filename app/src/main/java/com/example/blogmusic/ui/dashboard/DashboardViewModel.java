@@ -12,7 +12,6 @@ import com.example.blogmusic.network.RetrofitClient;
 import com.example.blogmusic.ui.components.Post;
 import com.example.blogmusic.ui.components.ReviewAlbum;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,30 +20,26 @@ import retrofit2.Response;
 
 public class DashboardViewModel extends ViewModel {
 
-    private final MutableLiveData<List<Post>> posts = new MutableLiveData<>();
-    private final MutableLiveData<List<ReviewAlbum>> reviewList = new MutableLiveData<>();
+    private final MutableLiveData<List<Post>> postsLiveData = new MutableLiveData<>();
+    private final ApiService apiService;
+    private final MutableLiveData<List<ReviewAlbum>> reviewsLiveData = new MutableLiveData<>();
 
     public DashboardViewModel() {
+        apiService = RetrofitClient.getInstance().create(ApiService.class);
         loadPosts();
         loadReviews();
     }
 
-    public LiveData<List<Post>> getPosts() {
-        return posts;
-    }
-
-    public LiveData<List<ReviewAlbum>> getReviews() {
-        return reviewList;
-    }
+    public LiveData<List<Post>> getPosts() { return postsLiveData; }
+    public LiveData<List<ReviewAlbum>> getReviews() { return reviewsLiveData; }
     private void loadPosts() {
-        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-        Call<List<Post>> call = apiService.getAllPosts(); // GET từ PHP API trả về List<Post>
+        Call<List<Post>> call = apiService.getPostsBySort("recent");
 
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<List<Post>> call, @NonNull Response<List<Post>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    posts.setValue(response.body());
+                    postsLiveData.setValue(response.body());
                 } else {
                     Log.e("NewsViewModel", "Lỗi lấy dữ liệu bài viết (status: " + response.code() + ")");
                 }
@@ -58,27 +53,20 @@ public class DashboardViewModel extends ViewModel {
     }
 
     private void loadReviews() {
-        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-        Call<List<ReviewAlbum>> call = apiService.getReviews();
+        Call<List<ReviewAlbum>> call = apiService.getReviewsBySort("recent");
 
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<List<ReviewAlbum>> call, @NonNull Response<List<ReviewAlbum>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<ReviewAlbum> data = response.body();
-                    reviewList.setValue(data);
-                    // ✅ In log số lượng review để kiểm tra
-                    Log.d("DEBUG", "Số lượng review: " + data.size());
+                    reviewsLiveData.setValue(response.body());
                 } else {
-                    Log.e("DEBUG", "Phản hồi thất bại - code: " + response.code());
-                    reviewList.setValue(new ArrayList<>());
+                    Log.e("ReviewViewModel", "Lỗi lấy dữ liệu bài viết (status: " + response.code() + ")");
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<List<ReviewAlbum>> call, @NonNull Throwable t) {
-                Log.e("DEBUG", "Lỗi khi gọi API: " + t.getMessage());
-                reviewList.setValue(new ArrayList<>());
+                Log.e("ReviewViewModel", "Lỗi mạng hoặc server: " + t.getMessage());
             }
         });
     }

@@ -51,17 +51,23 @@ public class NewsFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(NewsViewModel.class);
 
         // TabLayout: All - Recent
-        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("All"));
         binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Recent"));
+        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Most Viewed"));
+        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Most Favorited"));
 
         binding.newsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                String selectedTab = tab.getText().toString();
-                if (selectedTab.equals("All")) {
-                    viewModel.fetchAllPosts();
-                } else if (selectedTab.equals("Recent")) {
-                    viewModel.fetchRecentPosts();
+                switch (tab.getText().toString()) {
+                    case "Recent":
+                        viewModel.fetchPostsBySort("recent");
+                        break;
+                    case "Most Viewed":
+                        viewModel.fetchPostsBySort("views");
+                        break;
+                    case "Most Favorited":
+                        viewModel.fetchPostsBySort("favorites");
+                        break;
                 }
             }
 
@@ -91,7 +97,7 @@ public class NewsFragment extends Fragment {
             }
         });
 
-        viewModel.fetchAllPosts(); // mặc định gọi "All"
+        viewModel.fetchPostsBySort("recent");
 
         return binding.getRoot();
     }
@@ -117,13 +123,21 @@ public class NewsFragment extends Fragment {
         TabLayout.Tab selectedTab = binding.newsTabLayout.getTabAt(binding.newsTabLayout.getSelectedTabPosition());
         if (selectedTab != null) {
             String selectedText = selectedTab.getText().toString();
-            if (selectedText.equals("All")) {
-                viewModel.fetchAllPosts();
-            } else if (selectedText.equals("Recent")) {
-                viewModel.fetchRecentPosts();
+            switch (selectedText) {
+                case "Recent":
+                    viewModel.fetchPostsBySort("recent");
+                    break;
+                case "Most Viewed":
+                    viewModel.fetchPostsBySort("views");
+                    break;
+                case "Most Favorited":
+                    viewModel.fetchPostsBySort("favorites");
+                    break;
+                default:
+                    viewModel.fetchPostsBySort("all");
+                    break;
             }
         }
     }
-
 }
 

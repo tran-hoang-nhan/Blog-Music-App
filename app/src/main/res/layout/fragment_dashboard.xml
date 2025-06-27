@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="40dp"
+    android:paddingBottom="15dp"
     android:fontFamily="@font/mulish_regular"
     android:clipToPadding="false"
     tools:context=".ui.dashboard.DashboardFragment">

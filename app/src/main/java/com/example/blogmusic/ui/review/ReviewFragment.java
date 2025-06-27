@@ -49,8 +49,28 @@ public class ReviewFragment extends Fragment {
         binding.reviewRecyclerView.setAdapter(reviewAlbumAdapter);
 
         // TabLayout: All - Recent
-        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("All"));
         binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Recent"));
+        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Most Viewed"));
+        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Most Favorited"));
+        binding.reviewTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getText().toString()) {
+                    case "Recent":
+                        viewModel.fetchReviewsBySort("recent");
+                        break;
+                    case "Most Viewed":
+                        viewModel.fetchReviewsBySort("views");
+                        break;
+                    case "Most Favorited":
+                        viewModel.fetchReviewsBySort("favorites");
+                        break;
+                }
+            }
+
+            @Override public void onTabUnselected(TabLayout.Tab tab) {}
+            @Override public void onTabReselected(TabLayout.Tab tab) {}
+        });
 
         viewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
 
@@ -60,22 +80,6 @@ public class ReviewFragment extends Fragment {
             totalPages = (int) Math.ceil((double) allReviews.size() / REVIEWS_PER_PAGE);
             currentPage = 1;
             updateReviews();
-        });
-
-        // Lắng nghe chuyển tab
-        binding.reviewTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                String selectedTab = tab.getText().toString();
-                if (selectedTab.equals("All")) {
-                    viewModel.fetchAllReviews();
-                } else if (selectedTab.equals("Recent")) {
-                    viewModel.fetchRecentReviews();
-                }
-            }
-
-            @Override public void onTabUnselected(TabLayout.Tab tab) {}
-            @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
         // Nút phân trang
@@ -94,7 +98,7 @@ public class ReviewFragment extends Fragment {
         });
 
         // Mặc định gọi dữ liệu All
-        viewModel.fetchAllReviews();
+        viewModel.fetchReviewsBySort("recent");
 
         return binding.getRoot();
     }

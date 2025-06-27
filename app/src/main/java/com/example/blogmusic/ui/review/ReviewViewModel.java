@@ -1,6 +1,8 @@
 package com.example.blogmusic.ui.review;
 
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -16,53 +18,34 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReviewViewModel extends ViewModel {
-
-    private final MutableLiveData<List<ReviewAlbum>> reviewLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<ReviewAlbum>> reviewsLiveData = new MutableLiveData<>();
     private final ApiService apiService;
 
     public ReviewViewModel() {
         apiService = RetrofitClient.getInstance().create(ApiService.class);
-        fetchAllReviews(); // mặc định gọi "All"
     }
 
     public LiveData<List<ReviewAlbum>> getReviews() {
-        return reviewLiveData;
+        return reviewsLiveData;
     }
 
-    public void fetchAllReviews() {
-        Call<List<ReviewAlbum>> call = apiService.getReviews();
-        call.enqueue(new Callback<List<ReviewAlbum>>() {
+
+    public void fetchReviewsBySort(String sortType) {
+        Call<List<ReviewAlbum>> call = apiService.getReviewsBySort(sortType);
+
+        call.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<List<ReviewAlbum>> call, Response<List<ReviewAlbum>> response) {
+            public void onResponse(@NonNull Call<List<ReviewAlbum>> call, @NonNull Response<List<ReviewAlbum>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    reviewLiveData.setValue(response.body());
+                    reviewsLiveData.setValue(response.body());
                 } else {
-                    Log.e("ReviewViewModel", "Lỗi lấy dữ liệu All Reviews (status: " + response.code() + ")");
+                    Log.e("ReviewViewModel", "Lỗi lấy bài viết (" + sortType + ") - code: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<ReviewAlbum>> call, Throwable t) {
-                Log.e("ReviewViewModel", "Lỗi mạng khi gọi All Reviews: " + t.getMessage());
-            }
-        });
-    }
-
-    public void fetchRecentReviews() {
-        Call<List<ReviewAlbum>> call = apiService.getRecentReviews();
-        call.enqueue(new Callback<List<ReviewAlbum>>() {
-            @Override
-            public void onResponse(Call<List<ReviewAlbum>> call, Response<List<ReviewAlbum>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    reviewLiveData.setValue(response.body());
-                } else {
-                    Log.e("ReviewViewModel", "Lỗi lấy dữ liệu Recent Reviews (status: " + response.code() + ")");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<ReviewAlbum>> call, Throwable t) {
-                Log.e("ReviewViewModel", "Lỗi mạng khi gọi Recent Reviews: " + t.getMessage());
+            public void onFailure(@NonNull Call<List<ReviewAlbum>> call, @NonNull Throwable t) {
+                Log.e("ReviewViewModel", "Lỗi mạng (" + sortType + "): " + t.getMessage());
             }
         });
     }
