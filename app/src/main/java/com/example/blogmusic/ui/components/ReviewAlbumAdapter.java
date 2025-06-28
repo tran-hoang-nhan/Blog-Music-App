@@ -3,6 +3,7 @@ package com.example.blogmusic.ui.components;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.blogmusic.R;
 
 import java.util.ArrayList;
@@ -73,7 +75,12 @@ public class ReviewAlbumAdapter extends RecyclerView.Adapter<ReviewAlbumAdapter.
 
         Glide.with(holder.itemView.getContext())
                 .load(album.getImageCover())
+                .placeholder(R.drawable.placeholder)
+                .transition(DrawableTransitionOptions.withCrossFade(500))
                 .into(holder.imageView);
+        holder.imageView.startAnimation(AnimationUtils.loadAnimation(
+                holder.itemView.getContext(), R.anim.image_scale));
+
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {

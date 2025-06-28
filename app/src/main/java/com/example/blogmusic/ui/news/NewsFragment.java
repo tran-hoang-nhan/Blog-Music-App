@@ -47,13 +47,15 @@ public class NewsFragment extends Fragment {
 
         binding.newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.newsRecyclerView.setAdapter(postAdapter);
+        binding.newsRecyclerView.setLayoutAnimation(android.view.animation.AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_slide_in));
+
 
         viewModel = new ViewModelProvider(this).get(NewsViewModel.class);
 
         // TabLayout: All - Recent
         binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Recent"));
-        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Most Viewed"));
-        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Most Favorited"));
+        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Popular"));
+        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Favorited"));
 
         binding.newsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -62,10 +64,10 @@ public class NewsFragment extends Fragment {
                     case "Recent":
                         viewModel.fetchPostsBySort("recent");
                         break;
-                    case "Most Viewed":
+                    case "Popular":
                         viewModel.fetchPostsBySort("views");
                         break;
-                    case "Most Favorited":
+                    case "Favorited":
                         viewModel.fetchPostsBySort("favorites");
                         break;
                 }
@@ -109,35 +111,15 @@ public class NewsFragment extends Fragment {
         int endIndex = Math.min(startIndex + POSTS_PER_PAGE, allPosts.size());
         List<Post> pagedPosts = allPosts.subList(startIndex, endIndex);
         postAdapter.submitList(pagedPosts);
+        binding.newsRecyclerView.scheduleLayoutAnimation(); // chạy animation
         binding.pageIndicator.setText(String.valueOf(currentPage));
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        TabLayout.Tab selectedTab = binding.newsTabLayout.getTabAt(binding.newsTabLayout.getSelectedTabPosition());
-        if (selectedTab != null) {
-            String selectedText = selectedTab.getText().toString();
-            switch (selectedText) {
-                case "Recent":
-                    viewModel.fetchPostsBySort("recent");
-                    break;
-                case "Most Viewed":
-                    viewModel.fetchPostsBySort("views");
-                    break;
-                case "Most Favorited":
-                    viewModel.fetchPostsBySort("favorites");
-                    break;
-                default:
-                    viewModel.fetchPostsBySort("all");
-                    break;
-            }
-        }
     }
 }
 

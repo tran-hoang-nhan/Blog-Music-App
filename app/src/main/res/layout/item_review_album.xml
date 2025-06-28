@@ -22,59 +22,74 @@
             android:contentDescription="Image Cover"
             android:layout_marginBottom="8dp" />
 
-        <TextView
-            android:id="@+id/albumTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Album Title"
-            android:textStyle="bold"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/artistTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Artist"
-            android:layout_marginTop="2dp"
-            android:textColor="@android:color/darker_gray" />
-
-        <TextView
-            android:id="@+id/reviewDateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Review Date"
-            android:layout_marginTop="2dp"
-            android:textColor="@android:color/darker_gray" />
-
-        <!-- NEW horizontal layout for rating, views, favorites -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="4dp">
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
 
-            <TextView
-                android:id="@+id/scoreTextView"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="⭐ 10/10"
-                android:textSize="13sp"
-                android:layout_marginEnd="12dp" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/viewsTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="👁 1234"
-                android:textSize="13sp"
-                android:layout_marginEnd="12dp" />
+                <TextView
+                    android:id="@+id/albumTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mulish_extrabold"
+                    android:text="Album Title"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/favoritesTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="❤️ 567"
-                android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/artistTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Artist"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/reviewDateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Review Date"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/viewsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="👁 1234"
+                    android:textSize="13sp"
+                    android:layout_marginTop="2dp" />
+
+                <TextView
+                    android:id="@+id/favoritesTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="❤️ 567"
+                    android:textSize="13sp" />
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="0"
+                android:layout_gravity="center"
+                android:background="@drawable/rating_circle">
+                <TextView
+                    android:id="@+id/scoreTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="8.5"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:textColor="#FF3B3B" />
+            </FrameLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

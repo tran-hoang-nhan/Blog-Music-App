@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -69,6 +71,8 @@ public class DashboardFragment extends Fragment {
     }
     private void setupRecyclerViews() {
         NavController navController = NavHostFragment.findNavController(this);
+
+
         postAdapter = new PostAdapter(post -> {
             Bundle bundle = new Bundle();
             bundle.putInt("post_id", post.getId());  // Đảm bảo có getId()
@@ -76,8 +80,12 @@ public class DashboardFragment extends Fragment {
         }, PostAdapter.PostLayoutType.GRID);
         binding.newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
         binding.newsRecyclerView.setAdapter(postAdapter);
+        binding.newsRecyclerView.setLayoutAnimation(
+                AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_fade_in)
+        );
         PagerSnapHelper newsSnapHelper = new PagerSnapHelper();
         newsSnapHelper.attachToRecyclerView(binding.newsRecyclerView);
+
 
         reviewAlbumAdapter = new ReviewAlbumAdapter(review -> {
             Bundle bundle = new Bundle();
@@ -86,8 +94,16 @@ public class DashboardFragment extends Fragment {
         }, ReviewAlbumAdapter.ReviewLayoutType.GRID);
         binding.reviewAlbumRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.reviewAlbumRecyclerView.setAdapter(reviewAlbumAdapter);
+        binding.reviewAlbumRecyclerView.setLayoutAnimation(
+                AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_fade_in)
+        );
         PagerSnapHelper ReviewAlbumSnapHelper= new PagerSnapHelper();
         ReviewAlbumSnapHelper.attachToRecyclerView(binding.reviewAlbumRecyclerView);
+
+        LayoutAnimationController animationController = AnimationUtils.loadLayoutAnimation(
+                requireContext(), R.anim.layout_animation_slide_in);
+        binding.newsRecyclerView.setLayoutAnimation(animationController);
+        binding.reviewAlbumRecyclerView.setLayoutAnimation(animationController);
     }
 
     private void observeViewModel() {

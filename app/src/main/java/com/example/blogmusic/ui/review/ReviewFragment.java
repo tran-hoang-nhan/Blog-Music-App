@@ -47,11 +47,13 @@ public class ReviewFragment extends Fragment {
 
         binding.reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.reviewRecyclerView.setAdapter(reviewAlbumAdapter);
+        binding.reviewRecyclerView.setLayoutAnimation(android.view.animation.AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_slide_in));
+
 
         // TabLayout: All - Recent
         binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Recent"));
-        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Most Viewed"));
-        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Most Favorited"));
+        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Popular"));
+        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Favorited"));
         binding.reviewTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -59,10 +61,10 @@ public class ReviewFragment extends Fragment {
                     case "Recent":
                         viewModel.fetchReviewsBySort("recent");
                         break;
-                    case "Most Viewed":
+                    case "Popular":
                         viewModel.fetchReviewsBySort("views");
                         break;
-                    case "Most Favorited":
+                    case "Favorited":
                         viewModel.fetchReviewsBySort("favorites");
                         break;
                 }
@@ -108,6 +110,8 @@ public class ReviewFragment extends Fragment {
         int endIndex = Math.min(startIndex + REVIEWS_PER_PAGE, allReviews.size());
         List<ReviewAlbum> paged = allReviews.subList(startIndex, endIndex);
         reviewAlbumAdapter.submitList(paged);
+        reviewAlbumAdapter.submitList(paged);
+        binding.reviewRecyclerView.scheduleLayoutAnimation(); // chạy animation
         binding.pageIndicator.setText(String.valueOf(currentPage));
     }
 
