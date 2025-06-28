@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="60dp"
+    android:paddingTop="60dp"
+    android:fontFamily="@font/mulish_regular"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/postCountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Blogs (0)"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:fontFamily="@font/mulish_extrabold"
+            android:layout_marginTop="16dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/postRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            tools:ignore="TextSizeCheck" />
+
+        <TextView
+            android:id="@+id/reviewCountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reviews (0)"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:fontFamily="@font/mulish_extrabold"
+            android:layout_marginTop="16dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reviewRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            tools:ignore="TextSizeCheck" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
