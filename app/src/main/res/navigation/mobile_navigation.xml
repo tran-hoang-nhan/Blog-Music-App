@@ -1,58 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/mobile_navigation"
-        app:startDestination="@+id/navigation_dashboard">
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_dashboard">
 
-        <fragment
-            android:id="@+id/navigation_news"
-            android:name="com.example.blogmusic.ui.news.NewsFragment"
-            android:label="News"
-            tools:layout="@layout/fragment_news" />
+    <fragment
+        android:id="@+id/navigation_news"
+        android:name="com.example.blogmusic.ui.news.NewsFragment"
+        android:label="News"
+        tools:layout="@layout/fragment_news" />
 
-        <fragment
-            android:id="@+id/navigation_dashboard"
-            android:name="com.example.blogmusic.ui.dashboard.DashboardFragment"
-            android:label="@string/title_dashboard"
-            tools:layout="@layout/fragment_dashboard" />
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.blogmusic.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
 
-        <fragment
-            android:id="@+id/navigation_profile"
-            android:name="com.example.blogmusic.ui.profile.ProfileFragment"
-            android:label="Profile"
-            tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.blogmusic.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile">
 
-        <fragment
-            android:id="@+id/navigation_review"
-            android:name="com.example.blogmusic.ui.review.ReviewFragment"
-            android:label="Reviews"
-            tools:layout="@layout/fragment_review" />
+        <action
+            android:id="@+id/action_profile_to_login"
+            app:destination="@id/loginFragment" />
 
-        <fragment
-            android:id="@+id/postDetailFragment"
-            android:name="com.example.blogmusic.ui.news.PostDetailFragment"
-            android:label="Post Detail"
-            tools:layout="@layout/fragment_post_detail">
-            <argument
-                android:name="post_id"
-                app:argType="integer" />
-        </fragment>
+        <action
+            android:id="@+id/action_profile_to_register"
+            app:destination="@id/registerFragment" />
 
-        <fragment
-            android:id="@+id/reviewDetailFragment"
-            android:name="com.example.blogmusic.ui.review.ReviewAlbumDetailFragment"
-            android:label="Review Detail"
-            tools:layout="@layout/fragment_review_detail">
-            <argument
-                android:name="review_id"
-                app:argType="integer" />
-        </fragment>
 
-        <fragment
-            android:id="@+id/searchFragment"
-            android:name="com.example.blogmusic.ui.search.SearchFragment"
-            android:label="Search"
-            tools:layout="@layout/fragment_search" />
+        <action
+            android:id="@+id/action_profile_self"
+            app:destination="@id/navigation_profile"
+            app:popUpTo="@id/navigation_profile"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_review"
+        android:name="com.example.blogmusic.ui.review.ReviewFragment"
+        android:label="Reviews"
+        tools:layout="@layout/fragment_review" />
+
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.example.blogmusic.ui.news.PostDetailFragment"
+        android:label="Post Detail"
+        tools:layout="@layout/fragment_post_detail">
+        <argument
+            android:name="post_id"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reviewDetailFragment"
+        android:name="com.example.blogmusic.ui.review.ReviewAlbumDetailFragment"
+        android:label="Review Detail"
+        tools:layout="@layout/fragment_review_detail">
+        <argument
+            android:name="review_id"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.blogmusic.ui.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.blogmusic.ui.auth.LoginFragment"
+        android:label="Đăng nhập"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.blogmusic.ui.auth.RegisterFragment"
+        android:label="Đăng ký"
+        tools:layout="@layout/fragment_register" />
 
 </navigation>
