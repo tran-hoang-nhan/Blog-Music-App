@@ -86,7 +86,7 @@
                     android:layout_height="match_parent"
                     android:text="8.5"
                     android:textStyle="bold"
-                    android:textSize="18sp"
+                    android:textSize="24sp"
                     android:gravity="center"
                     android:textColor="#FF3B3B" />
             </FrameLayout>
