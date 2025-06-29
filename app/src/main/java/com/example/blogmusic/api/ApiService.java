@@ -6,14 +6,19 @@ import com.example.blogmusic.ui.components.PostResponse;
 import com.example.blogmusic.ui.components.ReviewAlbum;
 import com.example.blogmusic.ui.components.ReviewAlbumDetail;
 import com.example.blogmusic.ui.components.SearchResponse;
+import com.example.blogmusic.ui.model.AuthResponse.LoginResponse;
+import com.example.blogmusic.ui.model.AuthResponse.RegisterResponse;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
+
 
 public interface ApiService {
   // Gọi API CHO POST
@@ -42,4 +47,12 @@ public interface ApiService {
     Call<Void> increaseViews(@Query("type") String type, @Query("id") int id);
     @GET("search.php")
     Call<SearchResponse> search(@Query("keyword") String keyword);
+    @FormUrlEncoded
+    @POST("login.php")
+    Call<LoginResponse> login(@Field("email") String email, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("register.php")
+    Call<RegisterResponse> register(@Field("name") String name, @Field("email") String email, @Field("password") String password);
+
 }
