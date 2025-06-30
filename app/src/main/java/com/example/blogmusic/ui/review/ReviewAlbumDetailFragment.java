@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 
@@ -22,7 +24,8 @@ import com.example.blogmusic.api.ApiService;
 import com.example.blogmusic.network.RetrofitClient;
 import com.example.blogmusic.ui.components.Media;
 import com.example.blogmusic.ui.components.ReviewAlbumDetail;
-import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -36,10 +39,10 @@ import retrofit2.Response;
 
 public class ReviewAlbumDetailFragment extends Fragment {
 
-    private TextView albumTitleTextView, subtitleTextView, artistTextView, releaseDateTextView, ratingCircleTextView;
-    private ShapeableImageView imagecoverImageView;
-    private TextView summaryTextView, tracklistTextView,
-            mainContentTextView, scoreTextView, conclusionTextView, tagsTextView;
+    private ImageView albumCoverImage;
+    private TextView albumTitleText, albumArtistText, albumScoreText, detailSubtitleText;
+    private TextView detailSummaryText, detailTracklistText, detailMainContentText, detailConclusionText;
+    private ChipGroup tagsChipGroup;
 
     private LinearLayout summaryMediaContainer,
             tracklistMediaContainer, mainMediaContainer, conclusionMediaContainer, tagsMediaContainer;
@@ -50,21 +53,26 @@ public class ReviewAlbumDetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review_detail, container, false);
 
-        // Ánh xạ các view phần đầu album
-        albumTitleTextView = view.findViewById(R.id.albumTitle);
-        artistTextView = view.findViewById(R.id.albumArtist);
-        releaseDateTextView = view.findViewById(R.id.releaseDate);
-        ratingCircleTextView = view.findViewById(R.id.scoreTextView);
-        imagecoverImageView = view.findViewById(R.id.imageView);
+        // Setup Toolbar
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+        toolbar.setNavigationOnClickListener(v -> requireActivity().onBackPressed());
 
-        // Các phần review chi tiết
-        subtitleTextView = view.findViewById(R.id.detailSubtitle);
-        summaryTextView = view.findViewById(R.id.detailSummary);
-        tracklistTextView = view.findViewById(R.id.detailTracklist);
-        mainContentTextView = view.findViewById(R.id.detailMaincontent);
-        scoreTextView = view.findViewById(R.id.detailScore);
-        conclusionTextView = view.findViewById(R.id.detailConclusion);
-        tagsTextView = view.findViewById(R.id.detailTags);
+        // Map views
+        albumCoverImage = view.findViewById(R.id.album_cover_image);
+        albumTitleText = view.findViewById(R.id.album_title_text);
+        albumArtistText = view.findViewById(R.id.album_artist_text);
+        albumScoreText = view.findViewById(R.id.album_score_text);
+        detailSubtitleText = view.findViewById(R.id.detail_subtitle_text);
+        detailSummaryText = view.findViewById(R.id.detail_summary_text);
+        detailTracklistText = view.findViewById(R.id.detail_tracklist_text);
+        detailMainContentText = view.findViewById(R.id.detail_main_content_text);
+        detailConclusionText = view.findViewById(R.id.detail_conclusion_text);
+        tagsChipGroup = view.findViewById(R.id.tags_chip_group);
 
         // Media containers
         summaryMediaContainer = view.findViewById(R.id.summaryMediaContainer);
@@ -73,7 +81,7 @@ public class ReviewAlbumDetailFragment extends Fragment {
         conclusionMediaContainer = view.findViewById(R.id.conclusionMediaContainer);
         tagsMediaContainer = view.findViewById(R.id.tagsMediaContainer);
 
-        // Gọi dữ liệu
+        // Fetch data
         Bundle args = getArguments();
         if (args != null && args.containsKey("review_id")) {
             int reviewId = args.getInt("review_id");
@@ -92,52 +100,61 @@ public class ReviewAlbumDetailFragment extends Fragment {
                                    @NonNull Response<ReviewAlbumDetail> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ReviewAlbumDetail detail = response.body();
-
-                    // Album info section
-                    albumTitleTextView.setText(detail.getAlbumTitle());
-                    artistTextView.setText(detail.getArtist());
-                    releaseDateTextView.setText("Released: " + detail.getReleaseDate());
-                    ratingCircleTextView.setText(String.valueOf(detail.getScore()));
-                    Glide.with(requireContext())
-                            .load(detail.getImageCover()) // Đường dẫn hình ảnh từ response
-                            .placeholder(R.drawable.ic_dashboard_black_24dp)
-                            .into(imagecoverImageView);
-
-                    // Nội dung review
-                    subtitleTextView.setText(detail.getSubtitle());
-                    summaryTextView.setText(detail.getSummary());
-
-                    String[] tracks = detail.getTracklist().split(",");
-                    StringBuilder formatted = new StringBuilder();
-                    for (int i = 0; i < tracks.length; i++) {
-                        formatted.append((i + 1)).append(". ").append(tracks[i].trim()).append("\n");
-                    }
-                    tracklistTextView.setText(formatted.toString().trim());
-
-                    mainContentTextView.setText(detail.getMain_content());
-                    scoreTextView.setText(String.valueOf(detail.getScore()));
-                    conclusionTextView.setText(detail.getConclusion());
-                    tagsTextView.setText("Tags: " + detail.getTags());
-
-                    Map<String, List<Media>> mediaMap = detail.getMedia();
-                    if (mediaMap != null) {
-                        addMediaToSection(mediaMap.get("summary"), summaryMediaContainer);
-                        addMediaToSection(mediaMap.get("tracklist"), tracklistMediaContainer);
-                        addMediaToSection(mediaMap.get("main_content"), mainMediaContainer);
-                        addMediaToSection(mediaMap.get("conclusion"), conclusionMediaContainer);
-                        addMediaToSection(mediaMap.get("tags"), tagsMediaContainer);
-                    }
-
+                    populateUI(detail);
                 } else {
-                    Toast.makeText(getContext(), "Không tìm thấy chi tiết review", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Failed to load review details", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ReviewAlbumDetail> call, @NonNull Throwable t) {
-                Toast.makeText(getContext(), "Lỗi kết nối server", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void populateUI(ReviewAlbumDetail detail) {
+        // Header
+        albumTitleText.setText(detail.getAlbumTitle());
+        albumArtistText.setText(detail.getArtist());
+        Glide.with(requireContext())
+                .load(detail.getImageCover())
+                .placeholder(R.drawable.placeholder)
+                .into(albumCoverImage);
+
+        // Body
+        albumScoreText.setText(String.valueOf(detail.getScore()));
+        detailSubtitleText.setText(detail.getSubtitle());
+        detailSummaryText.setText(detail.getSummary());
+        detailMainContentText.setText(detail.getMain_content());
+        detailConclusionText.setText(detail.getConclusion());
+
+        // Format and set Tracklist
+        String[] tracks = detail.getTracklist().split(",");
+        StringBuilder formattedTracklist = new StringBuilder();
+        for (int i = 0; i < tracks.length; i++) {
+            formattedTracklist.append(i + 1).append(". ").append(tracks[i].trim()).append("\n");
+        }
+        detailTracklistText.setText(formattedTracklist.toString().trim());
+
+        // Add chips for tags
+        String[] tags = detail.getTags().split(",");
+        tagsChipGroup.removeAllViews();
+        for (String tag : tags) {
+            Chip chip = new Chip(requireContext());
+            chip.setText(tag.trim());
+            tagsChipGroup.addView(chip);
+        }
+
+        // Handle Media
+        Map<String, List<Media>> mediaMap = detail.getMedia();
+        if (mediaMap != null) {
+            addMediaToSection(mediaMap.get("summary"), summaryMediaContainer);
+            addMediaToSection(mediaMap.get("tracklist"), tracklistMediaContainer);
+            addMediaToSection(mediaMap.get("main_content"), mainMediaContainer);
+            addMediaToSection(mediaMap.get("conclusion"), conclusionMediaContainer);
+            addMediaToSection(mediaMap.get("tags"), tagsMediaContainer);
+        }
     }
 
     private void addMediaToSection(List<Media> mediaList, LinearLayout sectionLayout) {
