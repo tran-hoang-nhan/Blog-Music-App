@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 public class ReviewAlbumDetail {
-    private final int reviewId, score;
+    private final int reviewId;
+    private final double score;
     private final String album_title, image_cover, summary ,subtitle, tracklist, main_content, artist, release_date, conclusion, tags;
     private final Map<String, List<Media>> media;
 
-    public ReviewAlbumDetail(int reviewId, String album_title, String image_cover, String subtitle, String summary, String tracklist, String release_date, String artist,String main_content, int score, String conclusion, String tags, Map<String, List<Media>> media) {
+    public ReviewAlbumDetail(int reviewId, String album_title, String image_cover, String subtitle, String summary, String tracklist, String release_date, String artist,String main_content, double score, String conclusion, String tags, Map<String, List<Media>> media) {
         this.reviewId = reviewId;
         this.album_title = album_title;
         this.image_cover = image_cover;
@@ -33,7 +34,7 @@ public class ReviewAlbumDetail {
     public String getArtist() { return artist; }
     public String getReleaseDate() { return release_date; }
     public String getMain_content() { return main_content; }
-    public int getScore() { return score; }
+    public double getScore() { return score; }
     public String getConclusion() { return conclusion; }
     public String getTags() { return tags; }
     public Map<String, List<Media>> getMedia() { return media; }
