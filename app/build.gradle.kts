@@ -55,6 +55,7 @@ dependencies {
     implementation (libs.media3.exoplayer)
     implementation (libs.core)
     implementation(libs.volley)
+    implementation(libs.legacy.support.v4)
     annotationProcessor (libs.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

@@ -1,23 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.news.NewsFragment">
+    tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/text_Profile"
+    <!-- Ảnh nền -->
+    <ImageView
+        android:id="@+id/background_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_background_profile"
+        android:adjustViewBounds="true" />
+
+    <!-- Container phần thông tin profile -->
+    <LinearLayout
+        android:id="@+id/profile_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <!-- Avatar -->
+        <ImageView
+            android:id="@+id/profile_avatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_background_profile"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/ic_profile_white" />
+
+        <!-- Tên người dùng -->
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên người dùng"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Email -->
+        <TextView
+            android:id="@+id/tv_user_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email@example.com"
+            android:textColor="#CCCCCC"
+            android:textSize="16sp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Nút Edit Profile -->
+        <Button
+            android:id="@+id/btn_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Profile"
+            android:backgroundTint="#FFA726"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Nút Log Out -->
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log Out"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <!-- Container phần chưa đăng nhập -->
+    <LinearLayout
+        android:id="@+id/bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_alignParentBottom="true"
+        android:background="#CC000000"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="253dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#D3D3D3"
+            android:text="Login"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/btn_sign_up"
+            android:layout_width="264dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFA500"
+            android:text="Sign Up"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</RelativeLayout>
