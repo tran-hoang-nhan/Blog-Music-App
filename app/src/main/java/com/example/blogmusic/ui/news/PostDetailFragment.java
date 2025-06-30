@@ -175,7 +175,6 @@ public class PostDetailFragment extends Fragment {
                     }
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<PostResponse> call, @NonNull Throwable t) {
                 Log.e("RelatedPosts", "Error: " + t.getMessage());

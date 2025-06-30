@@ -43,8 +43,8 @@ public interface ApiService {
     Call<Void> addReview(@Body ReviewAlbum review);
     @GET("review/review_detail.php")
     Call<ReviewAlbumDetail> getReviewDetail(@Query("id") int id);
-    @GET("review/related_review.php")
-    Call<ReviewAlbumResponse> getRelatedReviews(@Query("artist") String artist, @Query("review_id") int reviewId);
+    @GET("review/related_reviews.php")
+    Call<ReviewAlbumResponse> getRelatedReviews(@Query("artist") String artist, @Query("id") int reviewId);
 
 
  // GỌI API CHO ...

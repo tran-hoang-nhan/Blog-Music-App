@@ -167,14 +167,13 @@ public class ReviewAlbumDetailFragment extends Fragment {
 
     private void fetchRelatedReviews(String artist, int currentId) {
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-        apiService.getRelatedReviews(artist, currentId).enqueue(new Callback<>() {
+        apiService.getRelatedReviews(artist, reviewId).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ReviewAlbumResponse> call, @NonNull Response<ReviewAlbumResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<ReviewAlbum> reviews = response.body().getReviews();
                     if (!reviews.isEmpty()) {
                         relatedReviewsLabel.setVisibility(View.VISIBLE);
-                        relatedReviewsRecyclerView.setVisibility(View.VISIBLE);
                         reviewAdapter.submitList(reviews);
                     }
                 }
