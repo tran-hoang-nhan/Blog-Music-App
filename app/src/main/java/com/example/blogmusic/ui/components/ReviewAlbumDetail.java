@@ -4,19 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ReviewAlbumDetail {
-    private int reviewId;
-    private String album_title;
-    private String image_cover;
-    private String subtitle;
-    private String summary;
-    private String tracklist;
-    private String main_content;
-    private int score;
-    private String artist;
-    private String release_date;
-    private String conclusion;
-    private String tags;
-    private Map<String, List<Media>> media;
+    private final int reviewId, score;
+    private final String album_title, image_cover, summary ,subtitle, tracklist, main_content, artist, release_date, conclusion, tags;
+    private final Map<String, List<Media>> media;
 
     public ReviewAlbumDetail(int reviewId, String album_title, String image_cover, String subtitle, String summary, String tracklist, String release_date, String artist,String main_content, int score, String conclusion, String tags, Map<String, List<Media>> media) {
         this.reviewId = reviewId;

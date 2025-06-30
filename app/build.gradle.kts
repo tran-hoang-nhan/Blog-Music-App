@@ -56,6 +56,7 @@ dependencies {
     implementation (libs.core)
     implementation(libs.volley)
     implementation(libs.legacy.support.v4)
+    implementation (libs.play.services.auth)
     annotationProcessor (libs.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

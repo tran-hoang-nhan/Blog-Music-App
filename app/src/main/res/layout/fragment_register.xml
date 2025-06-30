@@ -2,69 +2,105 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="@android:color/white"
+    android:padding="24dp">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
+        <!-- Tiêu đề lớn -->
         <TextView
-            android:text="Sign Up"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Create Account"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="8dp" />
 
+        <!-- Mô tả phụ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Join us and enjoy the music world!"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Tên sân khấu -->
         <EditText
             android:id="@+id/edt_name"
-            android:hint="Stage Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
+            android:hint="Stage Name"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:layout_marginBottom="12dp" />
 
+        <!-- Email -->
         <EditText
             android:id="@+id/edt_email"
-            android:hint="Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:inputType="textEmailAddress" />
+            android:hint="Email"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:inputType="textEmailAddress"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:layout_marginBottom="12dp" />
 
+        <!-- Mật khẩu -->
         <EditText
             android:id="@+id/edt_password"
-            android:hint="Create Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:inputType="textPassword" />
+            android:hint="Create Password"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:inputType="textPassword"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:layout_marginBottom="12dp" />
 
+        <!-- Xác nhận mật khẩu -->
         <EditText
             android:id="@+id/edt_confirm_password"
-            android:hint="Confirm Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:inputType="textPassword" />
+            android:hint="Confirm Password"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:inputType="textPassword"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:layout_marginBottom="24dp" />
 
+        <!-- Nút đăng ký -->
         <Button
             android:id="@+id/btn_register"
-            android:text="Sign Up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp" />
+            android:text="Sign Up"
+            android:backgroundTint="#3F51B5"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:padding="12dp" />
 
+        <!-- Chính sách -->
         <TextView
-            android:text="By signing up, you agree to our terms and privacy policy."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="By signing up, you agree to our Terms &amp; Privacy Policy."
             android:textSize="12sp"
             android:textColor="#888888"
             android:gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_marginTop="16dp" />
     </LinearLayout>
 </ScrollView>

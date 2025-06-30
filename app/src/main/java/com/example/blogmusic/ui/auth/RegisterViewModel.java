@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.blogmusic.ui.components.Auth;
-import com.example.blogmusic.ui.model.AuthResponse.RegisterResponse;
+import com.example.blogmusic.ui.components.AuthResponse.RegisterResponse;
 
 public class RegisterViewModel extends ViewModel {
     private final Auth auth = new Auth();

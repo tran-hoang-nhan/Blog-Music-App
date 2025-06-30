@@ -62,11 +62,20 @@ public class ProfileFragment extends Fragment {
             btnLogout.setVisibility(View.VISIBLE);
             btnEdit.setVisibility(View.VISIBLE);
 
+            ViewGroup profileContainer = view.findViewById(R.id.profile_container);
+            ViewGroup bottomContainer = view.findViewById(R.id.bottom_container);
+            profileContainer.setVisibility(View.VISIBLE);
+            bottomContainer.setVisibility(View.GONE);
+
+
             btnLogout.setOnClickListener(v -> {
-                prefs.edit().clear().apply();
-                Toast.makeText(getContext(), "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
-                nav.navigate(R.id.action_profile_self); // refresh lại fragment
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.clear();
+                editor.apply();
+
+                Navigation.findNavController(view).navigate(R.id.action_profile_self);
             });
+
 
             btnEdit.setOnClickListener(v -> {
                 Toast.makeText(getContext(), "Tính năng cập nhật hồ sơ đang được phát triển...", Toast.LENGTH_SHORT).show();

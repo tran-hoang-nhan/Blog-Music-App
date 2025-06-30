@@ -20,9 +20,11 @@ import retrofit2.Response;
 public class ReviewViewModel extends ViewModel {
     private final MutableLiveData<List<ReviewAlbum>> reviewsLiveData = new MutableLiveData<>();
     private final ApiService apiService;
+    private final int userId;
 
-    public ReviewViewModel() {
-        apiService = RetrofitClient.getInstance().create(ApiService.class);
+    public ReviewViewModel(int userId) {
+        this.userId = userId;
+        this.apiService = RetrofitClient.getInstance().create(ApiService.class);
     }
 
     public LiveData<List<ReviewAlbum>> getReviews() {
@@ -31,7 +33,7 @@ public class ReviewViewModel extends ViewModel {
 
 
     public void fetchReviewsBySort(String sortType) {
-        Call<List<ReviewAlbum>> call = apiService.getReviewsBySort(sortType);
+        Call<List<ReviewAlbum>> call = apiService.getReviewsBySort(sortType, userId);
 
         call.enqueue(new Callback<>() {
             @Override

@@ -4,19 +4,20 @@ import java.util.List;
 import java.util.Map;
 
 public class PostDetail {
-    private int post_id;
-    private String title;
-    private String author;
-    private String date;
+    private final int post_id;
+    private final String title;
+    private final String author;
+    private final String date;
 
-    private String subtitle;
-    private String introduction;
-    private String main_content;
-    private String conclusion;
-    private String tags;
-    private Map<String, List<Media>> media;
+    private final String subtitle;
+    private final String introduction;
+    private final String main_content;
+    private final String conclusion;
+    private final String tags;
+    private final String image_cover;
+    private final Map<String, List<Media>> media;
 
-    public PostDetail(int post_id, String title, String author, String date, String subtitle, String introduction, String mainContent, String conclusion, String tags, Map<String, List<Media>> media) {
+    public PostDetail(int post_id, String title, String author, String date, String subtitle, String introduction, String mainContent, String conclusion, String tags, String image_cover, Map<String, List<Media>> media) {
         this.post_id = post_id;
         this.title = title;
         this.author = author;
@@ -26,6 +27,7 @@ public class PostDetail {
         this.main_content = mainContent;
         this.conclusion = conclusion;
         this.tags = tags;
+        this.image_cover = image_cover;
         this.media = media;
     }
 
@@ -38,5 +40,6 @@ public class PostDetail {
     public String getMainContent() { return main_content; }
     public String getConclusion() { return conclusion; }
     public String getTags() { return tags; }
+    public String getImageCover() {return image_cover;}
     public Map<String, List<Media>> getMedia() { return media; }
 }

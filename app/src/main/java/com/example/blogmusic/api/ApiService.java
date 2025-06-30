@@ -1,13 +1,15 @@
 package com.example.blogmusic.api;
 
+import com.example.blogmusic.ui.components.FavoriteResponse;
 import com.example.blogmusic.ui.components.Post;
 import com.example.blogmusic.ui.components.PostDetail;
 import com.example.blogmusic.ui.components.PostResponse;
 import com.example.blogmusic.ui.components.ReviewAlbum;
 import com.example.blogmusic.ui.components.ReviewAlbumDetail;
+import com.example.blogmusic.ui.components.ReviewAlbumResponse;
 import com.example.blogmusic.ui.components.SearchResponse;
-import com.example.blogmusic.ui.model.AuthResponse.LoginResponse;
-import com.example.blogmusic.ui.model.AuthResponse.RegisterResponse;
+import com.example.blogmusic.ui.components.AuthResponse.LoginResponse;
+import com.example.blogmusic.ui.components.AuthResponse.RegisterResponse;
 
 import java.util.List;
 
@@ -23,7 +25,7 @@ import retrofit2.http.FormUrlEncoded;
 public interface ApiService {
   // Gọi API CHO POST
     @GET("post/posts.php")
-    Call<List<Post>> getPostsBySort(@Query("sort") String sortType);
+    Call<List<Post>> getPostsBySort(@Query("sort") String sortType, @Query("user_id") int userId);
     @GET("post/posts.php")
     Call<Post> getPostById(@Query("id") int id);
     @POST("post/posts.php")
@@ -36,11 +38,14 @@ public interface ApiService {
 
   // Gọi API CHO REVIEW
     @GET("review/reviews.php")
-    Call<List<ReviewAlbum>> getReviewsBySort(@Query("sort") String sortType);
+    Call<List<ReviewAlbum>> getReviewsBySort(@Query("sort") String sortType, @Query("user_id") int userId);
     @POST("review/reviews.php")
     Call<Void> addReview(@Body ReviewAlbum review);
     @GET("review/review_detail.php")
     Call<ReviewAlbumDetail> getReviewDetail(@Query("id") int id);
+    @GET("review/related_review.php")
+    Call<ReviewAlbumResponse> getRelatedReviews(@Query("artist") String artist, @Query("review_id") int reviewId);
+
 
  // GỌI API CHO ...
     @GET("views.php")
@@ -48,11 +53,24 @@ public interface ApiService {
     @GET("search.php")
     Call<SearchResponse> search(@Query("keyword") String keyword);
     @FormUrlEncoded
-    @POST("login.php")
+    @POST("user/login.php")
     Call<LoginResponse> login(@Field("email") String email, @Field("password") String password);
-
     @FormUrlEncoded
-    @POST("register.php")
+    @POST("user/register.php")
     Call<RegisterResponse> register(@Field("name") String name, @Field("email") String email, @Field("password") String password);
-
+    @FormUrlEncoded
+    @POST("user/favorite.php")
+    Call<FavoriteResponse> favorite(
+            @Field("user_id") int userId,
+            @Field("post_id") Integer postId,
+            @Field("review_id") Integer reviewId
+    );
+    @FormUrlEncoded
+    @POST("user/unfavorite.php")
+    Call<FavoriteResponse> unfavorite(@Field("user_id") int userId, @Field("post_id") Integer postId, @Field("review_id") Integer reviewId);
+    @FormUrlEncoded
+    @POST("count_favorite.php") Call<FavoriteResponse> countFavorites(@Field("post_id") int postId);
+    @FormUrlEncoded
+    @POST("login_google.php")
+    Call<LoginResponse> loginWithGoogle(@Field("email") String email, @Field("name") String name, @Field("idToken") String idToken);
 }

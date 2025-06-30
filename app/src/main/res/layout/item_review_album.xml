@@ -67,12 +67,29 @@
                     android:textSize="13sp"
                     android:layout_marginTop="2dp" />
 
-                <TextView
-                    android:id="@+id/favoritesTextView"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="❤️ 567"
-                    android:textSize="13sp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+
+                    android:paddingTop="4dp">
+
+                    <ImageButton
+                        android:id="@+id/btn_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_heart_outline" />
+
+                    <TextView
+                        android:id="@+id/favoritesTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="567"
+                        android:textSize="13sp"
+                        android:paddingStart="4dp" />
+                </LinearLayout>
             </LinearLayout>
             <FrameLayout
                 android:layout_width="80dp"

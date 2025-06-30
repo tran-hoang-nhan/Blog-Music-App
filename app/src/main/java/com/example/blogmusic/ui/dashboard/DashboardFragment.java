@@ -1,5 +1,6 @@
 package com.example.blogmusic.ui.dashboard;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -56,7 +57,12 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
-        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+        int userId = requireContext()
+                .getSharedPreferences("auth", Context.MODE_PRIVATE)
+                .getInt("userId", -1);
+
+        DashboardViewModelFactory factory = new DashboardViewModelFactory(userId);
+        dashboardViewModel = new ViewModelProvider(this, factory).get(DashboardViewModel.class);
         return binding.getRoot();
     }
 

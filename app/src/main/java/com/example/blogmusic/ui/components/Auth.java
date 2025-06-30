@@ -2,12 +2,12 @@ package com.example.blogmusic.ui.components;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.blogmusic.api.ApiService;
 import com.example.blogmusic.network.RetrofitClient;
-import com.example.blogmusic.ui.model.AuthResponse;
 
 
 import retrofit2.Call;
@@ -21,14 +21,14 @@ public class Auth {
     public LiveData<AuthResponse.LoginResponse> login(String email, String password) {
         MutableLiveData<AuthResponse.LoginResponse>loginLiveData = new MutableLiveData<>();
 
-        api.login(email, password).enqueue(new Callback<AuthResponse.LoginResponse>() {
+        api.login(email, password).enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<AuthResponse.LoginResponse> call, Response<AuthResponse.LoginResponse> response) {
+            public void onResponse(@NonNull Call<AuthResponse.LoginResponse> call, @NonNull Response<AuthResponse.LoginResponse> response) {
                 loginLiveData.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<AuthResponse.LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<AuthResponse.LoginResponse> call, @NonNull Throwable t) {
                 Log.e("Auth", "Lỗi kết nối: " + t.getMessage());
                 loginLiveData.setValue(null);
 
@@ -38,17 +38,37 @@ public class Auth {
         return loginLiveData;
 
     }
+    public LiveData<AuthResponse.LoginResponse> loginWithGoogle(String email, String name, String idToken) {
+        MutableLiveData<AuthResponse.LoginResponse> data = new MutableLiveData<>();
+        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
+        Call<AuthResponse.LoginResponse> call = apiService.loginWithGoogle(email, name, idToken);
+        call.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<AuthResponse.LoginResponse> call, @NonNull Response<AuthResponse.LoginResponse> response) {
+                if (response.isSuccessful()) {
+                    data.setValue(response.body());
+                } else {
+                    data.setValue(null);
+                }
+            }
 
+            @Override
+            public void onFailure(@NonNull Call<AuthResponse.LoginResponse> call, @NonNull Throwable t) {
+                data.setValue(null);
+            }
+        });
+        return data;
+    }
     public LiveData<AuthResponse.RegisterResponse> register(String name, String email, String password) {
         MutableLiveData<AuthResponse.RegisterResponse> result = new MutableLiveData<>();
 
-        api.register(name, email, password).enqueue(new Callback<AuthResponse.RegisterResponse>() {
+        api.register(name, email, password).enqueue(new Callback<>() {
             // Không dùng @Override ở đây để hạn chế clutter, theo style bạn muốn
-            public void onResponse(Call<AuthResponse.RegisterResponse> call, Response<AuthResponse.RegisterResponse> response) {
+            public void onResponse(@NonNull Call<AuthResponse.RegisterResponse> call, @NonNull Response<AuthResponse.RegisterResponse> response) {
                 result.setValue(response.body());
             }
 
-            public void onFailure(Call<AuthResponse.RegisterResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<AuthResponse.RegisterResponse> call, @NonNull Throwable t) {
                 Log.e("RegisterAPI", "Lỗi kết nối: " + t.getMessage(), t);
                 result.setValue(null);
             }

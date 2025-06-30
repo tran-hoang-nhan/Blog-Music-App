@@ -4,23 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:fontFamily="@font/mulish_regular"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="160dp"
         android:orientation="horizontal">
 
-        <!-- 1/4 hình ảnh -->
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageView"
             android:layout_width="0dp"
-            android:layout_height="150dp"
+            android:layout_height="160dp"
             android:layout_weight="1.5"
             android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/LeftRoundedImage" />
-        <!-- 3/4 nội dung -->
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -71,11 +71,20 @@
                     android:textSize="13sp"
                     android:layout_marginEnd="12dp" />
 
+                <ImageButton
+                    android:id="@+id/btn_favorite"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_heart_outline"
+                    android:contentDescription="Favorite" />
+
                 <TextView
                     android:id="@+id/favoritesTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="❤️ 567"
+                    android:text="567"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>

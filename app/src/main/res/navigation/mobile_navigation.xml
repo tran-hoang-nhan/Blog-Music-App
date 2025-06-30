@@ -30,13 +30,10 @@
         <action
             android:id="@+id/action_profile_to_register"
             app:destination="@id/registerFragment" />
-
-
         <action
             android:id="@+id/action_profile_self"
-            app:destination="@id/navigation_profile"
-            app:popUpTo="@id/navigation_profile"
-            app:popUpToInclusive="true" />
+            app:destination="@id/navigation_profile"/>
+
     </fragment>
 
     <fragment
@@ -74,13 +71,21 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.blogmusic.ui.auth.LoginFragment"
-        android:label="Đăng nhập"
-        tools:layout="@layout/fragment_login" />
+        android:label="Đăng nhập">
+
+        <action
+            android:id="@+id/action_login_to_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.blogmusic.ui.auth.RegisterFragment"
-        android:label="Đăng ký"
-        tools:layout="@layout/fragment_register" />
+        android:label="Register">
+
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
 </navigation>

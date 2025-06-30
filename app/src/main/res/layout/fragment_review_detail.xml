@@ -203,6 +203,25 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
+            <TextView
+                android:id="@+id/relatedReviewsLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Related Reviews"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryTextColor"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/relatedReviewRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:nestedScrollingEnabled="false"/>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

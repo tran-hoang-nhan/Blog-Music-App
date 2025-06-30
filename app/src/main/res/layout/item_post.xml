@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="330dp"
+        android:layout_height="350dp"
         android:orientation="vertical">
 
         <ImageView
@@ -41,6 +41,31 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:textSize="12sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp">
+
+            <ImageButton
+                android:id="@+id/btn_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_heart_outline" />
+
+            <TextView
+                android:id="@+id/favoritesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="567"
+                android:textSize="13sp"
+                android:paddingStart="4dp" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

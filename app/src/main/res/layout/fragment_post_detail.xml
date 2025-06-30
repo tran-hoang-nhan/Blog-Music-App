@@ -1,141 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/postScrollView"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fontFamily="@font/mulish_regular"
-    android:padding="16dp"
-    android:fillViewport="true">
+    android:background="@color/lightBackgroundColor"
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <!-- AppBar với hình cover -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="60dp"
-        android:paddingTop="60dp">
+        android:layout_height="300dp"
+        android:fitsSystemWindows="true">
 
-        <!-- Title -->
-        <TextView
-            android:id="@+id/titleTextView"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Post Title"
-            android:textSize="24sp"
-            android:fontFamily="@font/mulish_extrabold"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="8dp" />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false"
+            app:contentScrim="@android:color/transparent">
 
-        <!-- Author & Date -->
-        <TextView
-            android:id="@+id/authorTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Author"
-            android:textColor="@android:color/darker_gray"
-            android:layout_marginBottom="2dp" />
+            <ImageView
+                android:id="@+id/post_cover_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"
+                android:background="@android:color/darker_gray"/>
 
-        <TextView
-            android:id="@+id/dateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date"
-            android:textColor="@android:color/darker_gray"
-            android:layout_marginBottom="16dp" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin" />
 
-        <!-- Subtitle Section -->
-        <TextView
-            android:id="@+id/postSubtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Subtitle"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="16dp" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Nội dung bài viết -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:padding="24dp"
+        android:clipToPadding="false">
 
         <LinearLayout
-            android:id="@+id/subtitleMediaContainer"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:paddingBottom="72dp">
 
-        <!-- Introduction Section -->
-        <TextView
-            android:id="@+id/postIntro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Introduction"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="16dp" />
+            <!-- Tiêu đề -->
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Post Title"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
 
-        <LinearLayout
-            android:id="@+id/introMediaContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            <!-- Tác giả và ngày -->
+            <TextView
+                android:id="@+id/authorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Author"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginTop="4dp"/>
 
-        <!-- Main Content Section -->
-        <TextView
-            android:id="@+id/postMainContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Main Content"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="16dp" />
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginBottom="16dp"/>
 
-        <LinearLayout
-            android:id="@+id/mainMediaContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            <!-- Các phần nội dung -->
+            <TextView
+                android:id="@+id/postSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Subtitle"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="16dp"/>
 
-        <!-- Conclusion Section -->
-        <TextView
-            android:id="@+id/postConclusion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Conclusion"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="16dp" />
+            <LinearLayout
+                android:id="@+id/subtitleMediaContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
 
-        <LinearLayout
-            android:id="@+id/conclusionMediaContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            <TextView
+                android:id="@+id/postIntro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Introduction"
+                android:layout_marginTop="16dp"/>
 
-        <!-- Tags Section -->
-        <TextView
-            android:id="@+id/postTags"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tags"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textStyle="italic"
-            android:layout_marginTop="16dp" />
+            <LinearLayout
+                android:id="@+id/introMediaContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
 
-        <LinearLayout
-            android:id="@+id/tagsMediaContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-        <TextView
-            android:id="@+id/relatedPostsLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/mulish_extrabold"
-            android:textColor="@color/black"
-            android:text="Bài viết cùng tác giả"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/postMainContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Main Content"
+                android:layout_marginTop="16dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/relatedPostsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:nestedScrollingEnabled="false"/>
+            <LinearLayout
+                android:id="@+id/mainMediaContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
 
+            <TextView
+                android:id="@+id/postConclusion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Conclusion"
+                android:layout_marginTop="16dp"/>
 
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+            <LinearLayout
+                android:id="@+id/conclusionMediaContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+
+            <!-- Tags -->
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tagsChipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="8dp"
+                app:singleLine="false"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Bài viết liên quan -->
+            <TextView
+                android:id="@+id/relatedPostsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bài viết cùng tác giả"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                android:textSize="18sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/relatedPostsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

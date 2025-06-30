@@ -1,6 +1,8 @@
 package com.example.blogmusic.ui.news;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,13 +46,17 @@ public class NewsFragment extends Fragment {
             bundle.putInt("post_id", post.getId());
             navController.navigate(R.id.postDetailFragment, bundle);
         }, PostAdapter.PostLayoutType.LIST);
-
         binding.newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.newsRecyclerView.setAdapter(postAdapter);
         binding.newsRecyclerView.setLayoutAnimation(android.view.animation.AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_slide_in));
 
 
-        viewModel = new ViewModelProvider(this).get(NewsViewModel.class);
+        int userId = requireContext()
+                .getSharedPreferences("auth", Context.MODE_PRIVATE)
+                .getInt("userId", -1);
+        NewsViewModelFactory factory = new NewsViewModelFactory(userId);
+        viewModel = new ViewModelProvider(this, factory).get(NewsViewModel.class);
+
 
         // TabLayout: All - Recent
         binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Recent"));

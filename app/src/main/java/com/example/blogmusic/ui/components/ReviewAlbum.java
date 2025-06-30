@@ -1,8 +1,11 @@
 package com.example.blogmusic.ui.components;
 public class ReviewAlbum {
 
-    private int id, views, favorites;
-    private String album_title, release_date, review_date, artist, rating, image_cover;
+    private final int id;
+    private final int views;
+    private int favorites;
+    private final String album_title, release_date, review_date, artist, rating, image_cover;
+    private boolean favorited;
 
     public ReviewAlbum(int id, String album_title, String artist, String rating, String review_date, String release_date, String imageCover,  int views, int favorites) {
         this.id = id;
@@ -14,6 +17,7 @@ public class ReviewAlbum {
         this.image_cover = imageCover;
         this.views = views;
         this.favorites = favorites;
+        this.favorited = false;
     }
 
     public int getId() { return id;}
@@ -30,4 +34,9 @@ public class ReviewAlbum {
     public String getImageCover() { return image_cover; }
     public int getViews() { return views; }
     public int getFavorites() { return favorites; }
+    public boolean isFavorited() { return favorited; }
+
+    public void setFavorited(boolean favorited) { this.favorited = favorited; }
+
+    public void setFavorites(int favorites) { this.favorites = favorites; }
 }

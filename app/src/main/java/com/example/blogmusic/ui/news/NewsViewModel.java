@@ -21,9 +21,11 @@ public class NewsViewModel extends ViewModel {
 
     private final MutableLiveData<List<Post>> postsLiveData = new MutableLiveData<>();
     private final ApiService apiService;
+    private final int userId;
 
-    public NewsViewModel() {
-        apiService = RetrofitClient.getInstance().create(ApiService.class);
+    public NewsViewModel(int userId) {
+        this.userId = userId;
+        this.apiService = RetrofitClient.getInstance().create(ApiService.class);
     }
 
     public LiveData<List<Post>> getPosts() {
@@ -32,8 +34,7 @@ public class NewsViewModel extends ViewModel {
 
 
     public void fetchPostsBySort(String sortType) {
-        Call<List<Post>> call = apiService.getPostsBySort(sortType);
-
+        Call<List<Post>> call = apiService.getPostsBySort(sortType, userId);
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<List<Post>> call, @NonNull Response<List<Post>> response) {

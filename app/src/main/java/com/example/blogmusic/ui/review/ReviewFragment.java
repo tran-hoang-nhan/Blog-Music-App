@@ -1,5 +1,6 @@
 package com.example.blogmusic.ui.review;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,17 +38,22 @@ public class ReviewFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentReviewBinding.inflate(inflater, container, false);
         NavController navController = NavHostFragment.findNavController(this);
-
         // Khởi tạo adapter
         reviewAlbumAdapter = new ReviewAlbumAdapter(review -> {
             Bundle bundle = new Bundle();
             bundle.putInt("review_id", review.getId());
             navController.navigate(R.id.reviewDetailFragment, bundle);
         }, ReviewAlbumAdapter.ReviewLayoutType.LIST);
-
         binding.reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.reviewRecyclerView.setAdapter(reviewAlbumAdapter);
         binding.reviewRecyclerView.setLayoutAnimation(android.view.animation.AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_slide_in));
+
+
+        int userId = requireContext()
+                .getSharedPreferences("auth", Context.MODE_PRIVATE)
+                .getInt("userId", -1);
+        ReviewViewModelFactory factory = new ReviewViewModelFactory(userId);
+        viewModel = new ViewModelProvider(this, factory).get(ReviewViewModel.class);
 
 
         // TabLayout: All - Recent
@@ -69,12 +75,9 @@ public class ReviewFragment extends Fragment {
                         break;
                 }
             }
-
             @Override public void onTabUnselected(TabLayout.Tab tab) {}
             @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
-
-        viewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
 
         // Lắng nghe dữ liệu cập nhật từ ViewModel
         viewModel.getReviews().observe(getViewLifecycleOwner(), reviews -> {

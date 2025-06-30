@@ -23,8 +23,10 @@ public class DashboardViewModel extends ViewModel {
     private final MutableLiveData<List<Post>> postsLiveData = new MutableLiveData<>();
     private final ApiService apiService;
     private final MutableLiveData<List<ReviewAlbum>> reviewsLiveData = new MutableLiveData<>();
+    private final int userId;
 
-    public DashboardViewModel() {
+    public DashboardViewModel(int userId) {
+        this.userId = userId;
         apiService = RetrofitClient.getInstance().create(ApiService.class);
         loadPosts();
         loadReviews();
@@ -33,40 +35,44 @@ public class DashboardViewModel extends ViewModel {
     public LiveData<List<Post>> getPosts() { return postsLiveData; }
     public LiveData<List<ReviewAlbum>> getReviews() { return reviewsLiveData; }
     private void loadPosts() {
-        Call<List<Post>> call = apiService.getPostsBySort("recent");
+        Call<List<Post>> call = apiService.getPostsBySort("recent", userId);
 
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<List<Post>> call, @NonNull Response<List<Post>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    postsLiveData.setValue(response.body());
+                    List<Post> allPosts = response.body();
+                    List<Post> limitedPosts = allPosts.subList(0, Math.min(5, allPosts.size()));
+                    postsLiveData.setValue(limitedPosts);
                 } else {
-                    Log.e("NewsViewModel", "Lỗi lấy dữ liệu bài viết (status: " + response.code() + ")");
+                    Log.e("DashboardViewModel", "Lỗi lấy dữ liệu bài viết (status: " + response.code() + ")");
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Post>> call, @NonNull Throwable t) {
-                Log.e("NewsViewModel", "Lỗi mạng hoặc server: " + t.getMessage());
+                Log.e("DashboardViewModel", "Lỗi mạng hoặc server: " + t.getMessage());
             }
         });
     }
-
     private void loadReviews() {
-        Call<List<ReviewAlbum>> call = apiService.getReviewsBySort("recent");
+        Call<List<ReviewAlbum>> call = apiService.getReviewsBySort("recent", userId);
 
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<List<ReviewAlbum>> call, @NonNull Response<List<ReviewAlbum>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    reviewsLiveData.setValue(response.body());
+                    List<ReviewAlbum> allReviews = response.body();
+                    List<ReviewAlbum> limitedReviews = allReviews.subList(0, Math.min(5, allReviews.size()));
+                    reviewsLiveData.setValue(limitedReviews);
                 } else {
-                    Log.e("ReviewViewModel", "Lỗi lấy dữ liệu bài viết (status: " + response.code() + ")");
+                    Log.e("DashboardViewModel", "Lỗi lấy dữ liệu review (status: " + response.code() + ")");
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<List<ReviewAlbum>> call, @NonNull Throwable t) {
-                Log.e("ReviewViewModel", "Lỗi mạng hoặc server: " + t.getMessage());
+                Log.e("DashboardViewModel", "Lỗi mạng hoặc server: " + t.getMessage());
             }
         });
     }

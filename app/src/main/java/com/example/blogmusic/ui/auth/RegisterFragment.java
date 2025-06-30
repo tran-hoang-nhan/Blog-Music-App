@@ -9,13 +9,12 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.blogmusic.R;
-import com.example.blogmusic.ui.auth.RegisterViewModel;
-import com.example.blogmusic.ui.model.AuthResponse.RegisterResponse;
 
 public class RegisterFragment extends Fragment {
 
@@ -46,6 +45,8 @@ public class RegisterFragment extends Fragment {
             viewModel.register(name, email, pass).observe(getViewLifecycleOwner(), response -> {
                 if (response != null && response.isStatus()) {
                     Toast.makeText(getContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
+                    NavController navController = Navigation.findNavController(requireView());
+                    navController.navigate(R.id.action_register_to_login);  // Đảm bảo ID này đúng trong nav_graph
                 } else if (response != null) {
                     Toast.makeText(getContext(), response.getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
