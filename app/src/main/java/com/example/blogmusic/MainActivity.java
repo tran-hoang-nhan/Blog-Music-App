@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         // Setup Navigation
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment_activity_main);
@@ -50,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
 
+    }
     private void setupSearchView() {
         SearchView searchView = binding.searchView;
         View searchPlate = searchView.findViewById(androidx.appcompat.R.id.search_plate);

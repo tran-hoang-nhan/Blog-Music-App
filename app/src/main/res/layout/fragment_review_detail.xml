@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/lightBackgroundColor"
     android:fitsSystemWindows="true"
-    tools:context=".ui.review.ReviewAlbumDetailFragment">
+    tools:context=".ui.review.ReviewAlbumDetailFragment"
+    android:clipToPadding="false">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"

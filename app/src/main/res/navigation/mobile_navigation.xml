@@ -26,14 +26,18 @@
         <action
             android:id="@+id/action_profile_to_login"
             app:destination="@id/loginFragment" />
-
         <action
             android:id="@+id/action_profile_to_register"
             app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_profile_self"
             app:destination="@id/navigation_profile"/>
-
+        <action
+            android:id="@+id/action_profile_to_addBlog"
+            app:destination="@id/addBlogFragment" />
+        <action
+            android:id="@+id/action_profile_to_deleteBlog"
+            app:destination="@id/deleteBlogFragment" />
     </fragment>
 
     <fragment
@@ -88,4 +92,14 @@
             app:destination="@id/loginFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/addBlogFragment"
+        android:name="com.example.blogmusic.ui.admin.AddBlogFragment"
+        android:label="Thêm bài viết"
+        tools:layout="@layout/fragment_add_blog" />
+    <fragment
+        android:id="@+id/deleteBlogFragment"
+        android:name="com.example.blogmusic.ui.admin.DeleteBlogFragment"
+        android:label="Xóa Bài Viết"
+        tools:layout="@layout/fragment_delete_blog" />
 </navigation>

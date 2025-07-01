@@ -18,7 +18,6 @@
         android:src="@drawable/ic_background_profile"
         app:shapeAppearanceOverlay="@style/CircleImageViewStyle" />
 
-
     <TextView
         android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
@@ -38,20 +37,60 @@
         android:textSize="16sp"
         android:layout_marginBottom="20dp" />
 
-    <Button
+    <!-- Button: Người dùng -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_edit_profile"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Profile"
-        android:backgroundTint="#FFA726"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="12dp" />
+        android:text="Chỉnh sửa hồ sơ"
+        android:layout_marginBottom="12dp"
+        app:cornerRadius="16dp"
+        app:backgroundTint="@color/orange_light"
+        android:textColor="@android:color/white" />
 
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
+    <!-- Button: Admin - Add -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add_post"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log Out"
-        android:backgroundTint="#5D4037"
-        android:textColor="#FFFFFF" />
+        android:text="➕ Thêm bài viết"
+        android:visibility="gone"
+        app:cornerRadius="16dp"
+        app:backgroundTint="@color/blue_light"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Button: Admin - Edit -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_edit_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✏️ Sửa bài viết"
+        android:visibility="gone"
+        app:cornerRadius="16dp"
+        app:backgroundTint="@color/blue_light"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Button: Admin - Delete -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_delete_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🗑️ Xoá bài viết"
+        android:visibility="gone"
+        app:cornerRadius="16dp"
+        app:backgroundTint="@color/red_light"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="20dp" />
+
+    <!-- Button: Đăng xuất -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🚪 Đăng xuất"
+        app:cornerRadius="16dp"
+        app:backgroundTint="@color/brown_dark"
+        android:textColor="@android:color/white" />
 </LinearLayout>

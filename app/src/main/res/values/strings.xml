@@ -3,4 +3,18 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string-array name="blog_types">
+        <item>post</item>
+        <item>review</item>
+    </string-array>
+
+    <string-array name="genre_list">
+        <item>Rock</item>
+        <item>Pop</item>
+        <item>Hip-hop</item>
+        <item>Jazz</item>
+        <item>Electronic</item>
+    </string-array>
+
+
 </resources>

@@ -87,7 +87,7 @@ public class PostDetailFragment extends Fragment {
         relatedPostsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         postAdapter = new PostAdapter(post -> {
             Bundle args = new Bundle();
-            args.putInt("id", post.getId());
+            args.putInt("post_id", post.getId());
             navController.navigate(R.id.postDetailFragment, args);
         }, PostAdapter.PostLayoutType.GRID);
         relatedPostsRecyclerView.setAdapter(postAdapter);

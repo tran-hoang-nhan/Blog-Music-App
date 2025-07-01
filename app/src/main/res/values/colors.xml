@@ -10,4 +10,9 @@
     <color name="primaryTextColor">#DE000000</color>
     <color name="secondaryTextColor">#8A000000</color>
     <color name="lightBackgroundColor">#FAFAFA</color>
+    <color name="orange_light">#FFB74D</color>
+    <color name="blue_light">#42A5F5</color>
+    <color name="red_light">#EF5350</color>
+    <color name="brown_dark">#6D4C41</color>
+
 </resources>

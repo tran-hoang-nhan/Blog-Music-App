@@ -14,7 +14,6 @@
         android:src="@drawable/ic_background_profile"
         android:adjustViewBounds="true" />
 
-    <!-- Container phần thông tin profile -->
     <include
         android:id="@+id/profile_container"
         layout="@layout/fragment_profile_logged_in"
@@ -22,7 +21,6 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <!-- Vùng overlay làm mờ + form -->
     <LinearLayout
         android:id="@+id/bottom_container"
         android:layout_width="match_parent"
@@ -33,7 +31,6 @@
         android:gravity="center_horizontal"
         android:background="@drawable/bg_blur_translucent">
 
-        <!-- Logo avatar hoặc icon -->
         <ImageView
             android:id="@+id/avatar_icon"
             android:layout_width="100dp"

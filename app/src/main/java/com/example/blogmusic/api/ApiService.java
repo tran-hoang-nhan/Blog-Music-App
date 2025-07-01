@@ -1,5 +1,6 @@
 package com.example.blogmusic.api;
 
+import com.example.blogmusic.ui.components.AdminResponse;
 import com.example.blogmusic.ui.components.FavoriteResponse;
 import com.example.blogmusic.ui.components.Post;
 import com.example.blogmusic.ui.components.PostDetail;
@@ -12,9 +13,11 @@ import com.example.blogmusic.ui.components.AuthResponse.LoginResponse;
 import com.example.blogmusic.ui.components.AuthResponse.RegisterResponse;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -60,11 +63,7 @@ public interface ApiService {
     Call<RegisterResponse> register(@Field("name") String name, @Field("email") String email, @Field("password") String password);
     @FormUrlEncoded
     @POST("user/favorite.php")
-    Call<FavoriteResponse> favorite(
-            @Field("user_id") int userId,
-            @Field("post_id") Integer postId,
-            @Field("review_id") Integer reviewId
-    );
+    Call<FavoriteResponse> favorite(@Field("user_id") int userId, @Field("post_id") Integer postId, @Field("review_id") Integer reviewId);
     @FormUrlEncoded
     @POST("user/unfavorite.php")
     Call<FavoriteResponse> unfavorite(@Field("user_id") int userId, @Field("post_id") Integer postId, @Field("review_id") Integer reviewId);
@@ -73,4 +72,12 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("login_google.php")
     Call<LoginResponse> loginWithGoogle(@Field("email") String email, @Field("name") String name, @Field("idToken") String idToken);
+    @FormUrlEncoded
+    @POST("admin/add_blog.php")
+    Call<AdminResponse> addBlog(@FieldMap Map<String, String> data);
+
+    @FormUrlEncoded
+    @POST("admin/delete_blog.php")
+    Call<AdminResponse> deleteBlog(@Field("type") String type, @Field("id_or_title") String idOrTitle);
+
 }

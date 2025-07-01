@@ -53,6 +53,6 @@
             android:background="@android:color/transparent"
             app:searchIcon="@drawable/ic_search"
             app:closeIcon="@drawable/ic_close" />
-        
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
