@@ -92,6 +92,9 @@ public class ProfileFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_profile_self);
             });
 
+            btnEdit.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_editProfile));
+
+
             btnAddBlog.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_addBlog));
 
             btnEditBlog.setOnClickListener(v -> Toast.makeText(getContext(), "Tính năng cập nhật hồ sơ đang được phát triển...", Toast.LENGTH_SHORT).show());

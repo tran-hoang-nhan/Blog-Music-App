@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_profile_to_deleteBlog"
             app:destination="@id/deleteBlogFragment" />
+        <action
+            android:id="@+id/action_profile_to_editProfile"
+            app:destination="@id/editProfileFragment" />
     </fragment>
 
     <fragment
@@ -102,4 +105,20 @@
         android:name="com.example.blogmusic.ui.admin.DeleteBlogFragment"
         android:label="Xóa Bài Viết"
         tools:layout="@layout/fragment_delete_blog" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.blogmusic.ui.profile.EditProfileFragment"
+        android:label="Chỉnh sửa thông tn"
+        tools:layout="@layout/fragment_edit_profile">
+        <action
+            android:id="@+id/action_edit_to_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatbotFragment"
+        android:name="com.example.blogmusic.ui.chatbot.ChatbotFragment"
+        android:label="Chatbot AI"
+        tools:layout="@layout/fragment_chatbot" />
+
 </navigation>

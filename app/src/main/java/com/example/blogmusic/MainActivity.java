@@ -42,12 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
         setupSearchView();
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.navigation_profile) {
+            if (destination.getId() == R.id.navigation_profile && destination.getId() == R.id.chatbotFragment) {
                 binding.searchBarContainer.setVisibility(View.GONE);
             } else {
                 binding.searchBarContainer.setVisibility(View.VISIBLE);
             }
         });
+
+        binding.fabChatbot.setOnClickListener(v -> navController.navigate(R.id.chatbotFragment));
 
 
     }

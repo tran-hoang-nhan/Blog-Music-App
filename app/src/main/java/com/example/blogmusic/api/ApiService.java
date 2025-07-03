@@ -1,6 +1,9 @@
 package com.example.blogmusic.api;
 
 import com.example.blogmusic.ui.components.AdminResponse;
+import com.example.blogmusic.ui.components.BotResponse;
+import com.example.blogmusic.ui.components.ChatRequest;
+import com.example.blogmusic.ui.components.EditProfileResponse;
 import com.example.blogmusic.ui.components.FavoriteResponse;
 import com.example.blogmusic.ui.components.Post;
 import com.example.blogmusic.ui.components.PostDetail;
@@ -75,9 +78,12 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("admin/add_blog.php")
     Call<AdminResponse> addBlog(@FieldMap Map<String, String> data);
-
     @FormUrlEncoded
     @POST("admin/delete_blog.php")
     Call<AdminResponse> deleteBlog(@Field("type") String type, @Field("id_or_title") String idOrTitle);
-
+    @FormUrlEncoded
+    @POST("update_profile.php")
+    Call<EditProfileResponse> updateProfile(@Field("user_id") int userId, @Field("name") String name, @Field("email") String email);
+    @POST("chatbot_ai.php")
+    Call<BotResponse> sendMessage(@Body ChatRequest request);
 }
