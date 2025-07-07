@@ -57,9 +57,9 @@ public class ReviewFragment extends Fragment {
 
 
         // TabLayout: All - Recent
-        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Recent"));
-        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Popular"));
-        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Favorited"));
+        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Mới nhất"));
+        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Phổ biến"));
+        binding.reviewTabLayout.addTab(binding.reviewTabLayout.newTab().setText("Yêu thích"));
         binding.reviewTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

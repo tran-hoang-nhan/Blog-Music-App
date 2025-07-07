@@ -63,7 +63,8 @@ public class ReviewAlbumDetailFragment extends Fragment {
 
     private int reviewId;
     private String albumImageUrl = null;
-    private int albumPrice = 0; // Lưu giá album lấy từ CSDL
+    private int albumPrice = 0;
+    private boolean isOrdering = false;
 
     @Nullable
     @Override
@@ -292,20 +293,7 @@ public class ReviewAlbumDetailFragment extends Fragment {
                 .setView(dialogView)
                 .setNegativeButton("Hủy", null)
                 .create();
-        
-        // Thêm animation cho nút thanh toán
-        btnPay.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                Animation scaleDown = AnimationUtils.loadAnimation(context, R.anim.button_scale);
-                v.startAnimation(scaleDown);
-            } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-                Animation scaleUp = AnimationUtils.loadAnimation(context, R.anim.button_scale_reverse);
-                v.startAnimation(scaleUp);
-                v.performClick();
-            }
-            return false;
-        });
-        
+
         btnPay.setOnClickListener(v -> {
             String name = edtName.getText().toString().trim();
             String address = edtAddress.getText().toString().trim();
@@ -313,22 +301,30 @@ public class ReviewAlbumDetailFragment extends Fragment {
             String quantityStr = edtQuantity.getText().toString().trim();
             int quantity = 1;
             try { quantity = Integer.parseInt(quantityStr); } catch (Exception ignored) {}
+
             if (name.isEmpty() || address.isEmpty() || phone.isEmpty()) {
                 Toast.makeText(context, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
                 return;
             }
-            // Khai báo final cho các biến để dùng trong lambda
+
+            if (isOrdering) return;
+
             final int fUserId = userId;
             final int fReviewId = reviewId;
             final String fName = name;
             final String fAddress = address;
             final String fPhone = phone;
             final int fQuantity = quantity;
+
             showPaymentMethodDialog(() -> {
+                if (isOrdering) return;
+                isOrdering = true;
+                btnPay.setEnabled(false);
                 orderAlbum(fUserId, fReviewId, fName, fAddress, fPhone, fQuantity);
                 dialog.dismiss();
             });
         });
+
         dialog.show();
     }
 
@@ -368,6 +364,7 @@ public class ReviewAlbumDetailFragment extends Fragment {
             public void onResponse(@NonNull Call<OrderResponse> call, @NonNull Response<OrderResponse> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isStatus()) {
                     showOrderSuccessDialog();
+                    isOrdering = false;
                 } else {
                     Toast.makeText(getContext(), "Thanh toán thất bại!", Toast.LENGTH_SHORT).show();
                 }
@@ -375,6 +372,7 @@ public class ReviewAlbumDetailFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<OrderResponse> call, @NonNull Throwable t) {
+                isOrdering = false;
                 Toast.makeText(getContext(), "Lỗi kết nối khi thanh toán!", Toast.LENGTH_SHORT).show();
             }
         });

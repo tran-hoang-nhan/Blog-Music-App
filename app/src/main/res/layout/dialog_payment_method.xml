@@ -29,20 +29,6 @@
             android:text="Thanh toán khi nhận hàng (COD)"
             android:checked="true"
             android:padding="8dp"/>
-
-        <RadioButton
-            android:id="@+id/radio_vnpay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="VNPay"
-            android:padding="8dp"/>
-
-        <RadioButton
-            android:id="@+id/radio_momo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MoMo"
-            android:padding="8dp"/>
     </RadioGroup>
 
     <LinearLayout

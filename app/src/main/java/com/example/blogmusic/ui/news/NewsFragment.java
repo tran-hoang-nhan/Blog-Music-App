@@ -59,9 +59,9 @@ public class NewsFragment extends Fragment {
 
 
         // TabLayout: All - Recent
-        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Recent"));
-        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Popular"));
-        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Favorited"));
+        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Mới nhất"));
+        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Phổ biến"));
+        binding.newsTabLayout.addTab(binding.newsTabLayout.newTab().setText("Yêu thích"));
 
         binding.newsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
