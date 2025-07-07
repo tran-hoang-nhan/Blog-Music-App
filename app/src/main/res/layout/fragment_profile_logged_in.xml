@@ -93,4 +93,11 @@
         app:cornerRadius="16dp"
         app:backgroundTint="@color/brown_dark"
         android:textColor="@android:color/white" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_my_orders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cornerRadius="16dp"
+        android:text="Đơn hàng của tôi" />
 </LinearLayout>

@@ -20,8 +20,9 @@ public class Auth {
 
     public LiveData<AuthResponse.LoginResponse> login(String email, String password) {
         MutableLiveData<AuthResponse.LoginResponse>loginLiveData = new MutableLiveData<>();
+        LoginRequest request = new LoginRequest(email, password);
 
-        api.login(email, password).enqueue(new Callback<>() {
+        api.login(request).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<AuthResponse.LoginResponse> call, @NonNull Response<AuthResponse.LoginResponse> response) {
                 loginLiveData.setValue(response.body());
@@ -37,27 +38,6 @@ public class Auth {
 
         return loginLiveData;
 
-    }
-    public LiveData<AuthResponse.LoginResponse> loginWithGoogle(String email, String name, String idToken) {
-        MutableLiveData<AuthResponse.LoginResponse> data = new MutableLiveData<>();
-        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-        Call<AuthResponse.LoginResponse> call = apiService.loginWithGoogle(email, name, idToken);
-        call.enqueue(new Callback<>() {
-            @Override
-            public void onResponse(@NonNull Call<AuthResponse.LoginResponse> call, @NonNull Response<AuthResponse.LoginResponse> response) {
-                if (response.isSuccessful()) {
-                    data.setValue(response.body());
-                } else {
-                    data.setValue(null);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<AuthResponse.LoginResponse> call, @NonNull Throwable t) {
-                data.setValue(null);
-            }
-        });
-        return data;
     }
     public LiveData<AuthResponse.RegisterResponse> register(String name, String email, String password) {
         MutableLiveData<AuthResponse.RegisterResponse> result = new MutableLiveData<>();

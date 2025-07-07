@@ -3,11 +3,12 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="default_web_client_id">196151535992-7rbbbptjgbla48urkufl9ur822o4e07k.apps.googleusercontent.com</string>
+
     <string-array name="blog_types">
         <item>post</item>
         <item>review</item>
     </string-array>
-
     <string-array name="genre_list">
         <item>Rock</item>
         <item>Pop</item>
@@ -15,6 +16,7 @@
         <item>Jazz</item>
         <item>Electronic</item>
     </string-array>
+
 
 
 </resources>

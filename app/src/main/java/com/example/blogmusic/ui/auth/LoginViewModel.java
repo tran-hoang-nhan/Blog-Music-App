@@ -13,7 +13,4 @@ public class LoginViewModel extends ViewModel {
         return auth.login(email, password);
     }
 
-    public LiveData<AuthResponse.LoginResponse> loginWithGoogle(String email, String name, String idToken) {
-        return auth.loginWithGoogle(email, name, idToken);
-    }
 }

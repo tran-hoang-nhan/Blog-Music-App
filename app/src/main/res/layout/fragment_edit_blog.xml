@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_blog_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="60dp"
+    android:paddingBottom="50dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <Spinner
+            android:id="@+id/spinner_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp" />
+
+        <Spinner
+            android:id="@+id/spinner_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btn_load"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tải nội dung" />
+
+        <!-- Thông tin chung -->
+        <EditText
+            android:id="@+id/edt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tiêu đề / Tên Album" />
+
+        <EditText
+            android:id="@+id/edt_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tác giả / Nghệ sĩ" />
+
+        <EditText
+            android:id="@+id/edt_image_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Link ảnh bìa" />
+
+        <!-- POST -->
+        <LinearLayout
+            android:id="@+id/layout_post"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingTop="16dp">
+
+            <EditText android:id="@+id/edt_post_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phụ đề" />
+
+            <EditText android:id="@+id/edt_post_intro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Giới thiệu" />
+
+            <EditText android:id="@+id/edt_post_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nội dung chính" />
+
+            <EditText android:id="@+id/edt_post_conclusion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Kết luận" />
+
+            <EditText android:id="@+id/edt_post_tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tags" />
+        </LinearLayout>
+
+        <!-- REVIEW -->
+        <LinearLayout
+            android:id="@+id/layout_review"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingTop="16dp">
+
+            <Spinner
+                android:id="@+id/spinner_genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText android:id="@+id/edt_review_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phụ đề" />
+
+            <EditText android:id="@+id/edt_review_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tóm tắt" />
+
+            <EditText android:id="@+id/edt_review_tracklist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tracklist" />
+
+            <EditText android:id="@+id/edt_review_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nội dung chính" />
+
+            <EditText android:id="@+id/edt_review_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Điểm số" />
+
+            <EditText android:id="@+id/edt_review_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Rating (VD: 8.5)"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="8dp"/>
+
+
+            <EditText android:id="@+id/edt_review_conclusion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Kết luận" />
+
+            <EditText android:id="@+id/edt_review_tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tags" />
+
+            <EditText android:id="@+id/edt_release_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ngày phát hành (yyyy-MM-dd)" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cập nhật"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</ScrollView>

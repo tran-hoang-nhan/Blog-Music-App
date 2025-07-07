@@ -43,9 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.text.InputType;
 import android.widget.EditText;
 import com.example.blogmusic.ui.components.OrderResponse;
 import android.widget.Button;
@@ -59,10 +57,8 @@ public class ReviewAlbumDetailFragment extends Fragment {
     private ImageView albumCoverImage;
     private TextView albumTitleText, albumArtistText, albumScoreText, detailSubtitleText;
     private TextView detailSummaryText, detailTracklistText, detailMainContentText, detailConclusionText, relatedReviewsLabel;
-    private TextView albumPriceText; // Thêm biến này
     private ChipGroup tagsChipGroup;
     private LinearLayout summaryMediaContainer, tracklistMediaContainer, mainMediaContainer, conclusionMediaContainer, tagsMediaContainer;
-    private RecyclerView relatedReviewsRecyclerView;
     private ReviewAlbumAdapter reviewAdapter;
 
     private int reviewId;
@@ -93,7 +89,6 @@ public class ReviewAlbumDetailFragment extends Fragment {
         detailConclusionText = view.findViewById(R.id.detail_conclusion_text);
         relatedReviewsLabel = view.findViewById(R.id.relatedReviewsLabel);
         tagsChipGroup = view.findViewById(R.id.tags_chip_group);
-        albumPriceText = view.findViewById(R.id.album_price_text); // Ánh xạ view
 
         summaryMediaContainer = view.findViewById(R.id.summaryMediaContainer);
         tracklistMediaContainer = view.findViewById(R.id.tracklistMediaContainer);
@@ -101,7 +96,7 @@ public class ReviewAlbumDetailFragment extends Fragment {
         conclusionMediaContainer = view.findViewById(R.id.conclusionMediaContainer);
         tagsMediaContainer = view.findViewById(R.id.tagsMediaContainer);
 
-        relatedReviewsRecyclerView = view.findViewById(R.id.relatedReviewRecyclerView);
+        RecyclerView relatedReviewsRecyclerView = view.findViewById(R.id.relatedReviewRecyclerView);
         relatedReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         reviewAdapter = new ReviewAlbumAdapter(review -> {
             Bundle args = new Bundle();
@@ -122,7 +117,7 @@ public class ReviewAlbumDetailFragment extends Fragment {
         btnOrder.setOnClickListener(v -> showOrderDialog(albumImageUrl)); // albumImageUrl sẽ được set khi fetchReviewDetail
     }
 
-    private void fetchReviewDetail(int id) {
+    public void fetchReviewDetail(int id) {
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
         apiService.getReviewDetail(id).enqueue(new Callback<>() {
             @SuppressLint("SetTextI18n")
@@ -141,7 +136,6 @@ public class ReviewAlbumDetailFragment extends Fragment {
                     albumTitleText.setText(detail.getAlbumTitle());
                     albumArtistText.setText(detail.getArtist());
                     albumScoreText.setText(String.valueOf(detail.getScore()));
-                    albumPriceText.setText("Giá: " + detail.getPrice() + " VNĐ"); // Hiển thị giá
                     detailSubtitleText.setText(detail.getSubtitle());
                     detailSummaryText.setText(detail.getSummary());
                     detailMainContentText.setText(detail.getMain_content());
@@ -220,16 +214,23 @@ public class ReviewAlbumDetailFragment extends Fragment {
                 ImageView imageView = imageItem.findViewById(R.id.imageView);
                 Glide.with(requireContext()).load(Uri.parse(url)).into(imageView);
                 sectionLayout.addView(imageItem);
+
             } else if ("video".equalsIgnoreCase(type) && isYouTubeUrl(url)) {
                 View youtubeItem = inflater.inflate(R.layout.item_youtube_player, sectionLayout, false);
                 YouTubePlayerView playerView = youtubeItem.findViewById(R.id.youtubePlayerView);
+                playerView.setEnableAutomaticInitialization(false);
                 getLifecycle().addObserver(playerView);
+
                 playerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                     @Override
                     public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                        youTubePlayer.loadVideo(extractYoutubeVideoId(url), 0);
+                        String videoId = extractYoutubeVideoId(url);
+                        if (!videoId.isEmpty()) {
+                            youTubePlayer.cueVideo(videoId, 0);
+                        }
                     }
                 });
+
                 sectionLayout.addView(youtubeItem);
             }
         }
@@ -277,8 +278,8 @@ public class ReviewAlbumDetailFragment extends Fragment {
                 .placeholder(R.drawable.placeholder)
                 .into(imgAlbum);
         }
-        TextView tvAlbumPrice = dialogView.findViewById(R.id.tv_album_price); // Ánh xạ view giá
-        tvAlbumPrice.setText("Giá: " + albumPrice + " VNĐ"); // Hiển thị đúng giá từ CSDL
+        TextView tvAlbumPrice = dialogView.findViewById(R.id.tv_album_price);
+        tvAlbumPrice.setText("Giá: " + albumPrice + " VNĐ");
         EditText edtName = dialogView.findViewById(R.id.edt_order_name);
         EditText edtAddress = dialogView.findViewById(R.id.edt_order_address);
         EditText edtPhone = dialogView.findViewById(R.id.edt_order_phone);
@@ -300,6 +301,7 @@ public class ReviewAlbumDetailFragment extends Fragment {
             } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
                 Animation scaleUp = AnimationUtils.loadAnimation(context, R.anim.button_scale_reverse);
                 v.startAnimation(scaleUp);
+                v.performClick();
             }
             return false;
         });
@@ -346,6 +348,7 @@ public class ReviewAlbumDetailFragment extends Fragment {
             } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
                 Animation scaleUp = AnimationUtils.loadAnimation(context, R.anim.button_scale_reverse);
                 v.startAnimation(scaleUp);
+                v.performClick();
             }
             return false;
         });
@@ -360,7 +363,7 @@ public class ReviewAlbumDetailFragment extends Fragment {
 
     private void orderAlbum(int userId, int albumId, String name, String address, String phone, int quantity) {
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-        apiService.orderAlbum(userId, albumId, name, address, phone, quantity).enqueue(new Callback<OrderResponse>() {
+        apiService.orderAlbum(userId, albumId, name, address, phone, quantity).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<OrderResponse> call, @NonNull Response<OrderResponse> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isStatus()) {
@@ -369,6 +372,7 @@ public class ReviewAlbumDetailFragment extends Fragment {
                     Toast.makeText(getContext(), "Thanh toán thất bại!", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<OrderResponse> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), "Lỗi kết nối khi thanh toán!", Toast.LENGTH_SHORT).show();

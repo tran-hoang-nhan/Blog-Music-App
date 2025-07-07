@@ -5,6 +5,8 @@ import com.example.blogmusic.ui.components.BotResponse;
 import com.example.blogmusic.ui.components.ChatRequest;
 import com.example.blogmusic.ui.components.EditProfileResponse;
 import com.example.blogmusic.ui.components.FavoriteResponse;
+import com.example.blogmusic.ui.components.LoginRequest;
+import com.example.blogmusic.ui.components.OrderResponse;
 import com.example.blogmusic.ui.components.Post;
 import com.example.blogmusic.ui.components.PostDetail;
 import com.example.blogmusic.ui.components.PostResponse;
@@ -32,8 +34,6 @@ public interface ApiService {
   // Gọi API CHO POST
     @GET("post/posts.php")
     Call<List<Post>> getPostsBySort(@Query("sort") String sortType, @Query("user_id") int userId);
-    @GET("post/posts.php")
-    Call<Post> getPostById(@Query("id") int id);
     @POST("post/posts.php")
     Call<Void> addPost(@Body Post post);
 
@@ -58,9 +58,9 @@ public interface ApiService {
     Call<Void> increaseViews(@Query("type") String type, @Query("id") int id);
     @GET("search.php")
     Call<SearchResponse> search(@Query("keyword") String keyword);
-    @FormUrlEncoded
     @POST("user/login.php")
-    Call<LoginResponse> login(@Field("email") String email, @Field("password") String password);
+    Call<LoginResponse> login(@Body LoginRequest request);
+
     @FormUrlEncoded
     @POST("user/register.php")
     Call<RegisterResponse> register(@Field("name") String name, @Field("email") String email, @Field("password") String password);
@@ -87,13 +87,13 @@ public interface ApiService {
     @POST("chatbot_ai.php")
     Call<BotResponse> sendMessage(@Body ChatRequest request);
     @FormUrlEncoded
-    @POST("order_album.php")
-    Call<com.example.blogmusic.ui.components.OrderResponse> orderAlbum(
-        @Field("user_id") int userId,
-        @Field("album_id") int albumId,
-        @Field("name") String name,
-        @Field("address") String address,
-        @Field("phone") String phone,
-        @Field("quantity") int quantity
-    );
+    @POST("user/order_album.php")
+    Call<OrderResponse> orderAlbum(@Field("user_id") int userId, @Field("album_id") int albumId, @Field("name") String name, @Field("address") String address, @Field("phone") String phone, @Field("quantity") int quantity);
+    @GET("user/get_order.php")
+    Call<OrderResponse> getOrders(@Query("user_id") int userId);
+    @POST("admin/edit_blog.php")
+    Call<AdminResponse> editBlog(@Body Map<String, String> data);
+    @GET("admin/edit_blog.php")
+    Call<List<Integer>> getBlogIds(@Query("type") String type);
+
 }

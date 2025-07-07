@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="Login"
+            android:text="Đăng nhập"
             android:textColor="#000000"
             android:fontFamily="@font/mulish_bold"
             android:background="@drawable/bg_button_white" />
@@ -54,9 +54,11 @@
             android:id="@+id/btn_sign_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign Up"
+            android:text="Đăng ký"
             android:textColor="#000000"
             android:fontFamily="@font/mulish_bold"
             android:background="@drawable/bg_button_orange" />
+        \
+
     </LinearLayout>
 </RelativeLayout>

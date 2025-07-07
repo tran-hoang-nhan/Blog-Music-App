@@ -109,7 +109,7 @@ public class PostDetailFragment extends Fragment {
         }
     }
 
-    private void fetchPostDetail(int postId) {
+    public void fetchPostDetail(int postId) {
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
         apiService.getPostDetail(postId).enqueue(new Callback<>() {
             @SuppressLint("SetTextI18n")

@@ -72,15 +72,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/album_price_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Giá: 0 VNĐ"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
-                    android:layout_marginTop="4dp"/>
-
             </LinearLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

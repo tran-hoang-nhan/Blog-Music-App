@@ -6,15 +6,15 @@ public class AuthResponse {
     public static class LoginResponse {
         private final boolean status;
         private final String message;
-        private final int user_id;
+        private int user_id;
         private final String name;
         private final String email;
         private final String role;
 
-        public LoginResponse(boolean status, String message, int userId, String name, String email, String role) {
+        public LoginResponse(boolean status, String message, int user_id, String name, String email, String role) {
             this.status = status;
             this.message = message;
-            user_id = userId;
+            this.user_id = user_id;
             this.name = name;
             this.email = email;
             this.role = role;

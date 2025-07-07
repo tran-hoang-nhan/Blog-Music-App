@@ -42,7 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- SearchBar: Đặt CUỐI FILE để nó nằm trên tất cả -->
     <LinearLayout
         android:id="@+id/searchBarContainer"
         android:layout_width="0dp"

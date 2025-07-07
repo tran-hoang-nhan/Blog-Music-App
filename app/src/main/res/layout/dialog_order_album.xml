@@ -1,157 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="0dp"
-    android:background="@drawable/bg_dialog_music">
+    android:fillViewport="true">
 
-    <!-- Ảnh bìa album (sẽ set bằng code) -->
-    <ImageView
-        android:id="@+id/img_album_cover"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/placeholder"
-        android:background="@drawable/bg_album_circle"
-        android:elevation="4dp"/>
-
-    <TextView
-        android:id="@+id/tv_album_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Giá: 0 VNĐ"
-        android:textStyle="bold"
-        android:textColor="@color/primaryTextColor"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="8dp"/>
-
-    <!-- Tiêu đề -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Đặt mua album"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/mulish_extrabold"
-        android:textColor="@color/primaryTextColor"
-        android:layout_marginBottom="12dp"/>
-
-    <!-- Trường nhập -->
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Họ tên người nhận">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_order_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="0dp"
+        android:background="@drawable/bg_dialog_music">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Địa chỉ nhận hàng">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_order_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Số điện thoại">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_order_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="phone"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Số lượng">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_order_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="1"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Nút đặt hàng -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/btn_confirm_order"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_button_payment_modern"
-        android:elevation="12dp"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:clickable="true"
-        android:focusable="true"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
-
+        <!-- Ảnh bìa album (sẽ set bằng code) -->
         <ImageView
-            android:id="@+id/payment_icon"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/ic_payment"
-            android:contentDescription="Payment icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.5"
-            android:layout_marginEnd="12dp"/>
+            android:id="@+id/img_album_cover"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder"
+            android:background="@drawable/bg_album_circle"
+            android:elevation="4dp"/>
 
         <TextView
-            android:id="@+id/payment_text"
-            android:layout_width="0dp"
+            android:id="@+id/tv_album_price"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thanh toán ngay"
-            android:textAllCaps="false"
+            android:text="Giá: 0 VNĐ"
             android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:gravity="center"
-            app:layout_constraintStart_toEndOf="@id/payment_icon"
-            app:layout_constraintEnd_toStartOf="@id/payment_arrow"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"/>
+            android:textColor="@color/primaryTextColor"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"/>
 
-        <ImageView
-            android:id="@+id/payment_arrow"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@drawable/ic_arrow_forward"
-            android:contentDescription="Arrow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.5"
-            android:layout_marginStart="8dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Tiêu đề -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đặt mua album"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/mulish_extrabold"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginBottom="12dp"/>
 
-</LinearLayout> 
+        <!-- Trường nhập -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:hint="Họ tên người nhận">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_order_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:hint="Địa chỉ nhận hàng">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_order_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:hint="Số điện thoại">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_order_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:hint="Số lượng">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_order_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Nút đặt hàng -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_confirm_order"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_button_payment_modern"
+            android:elevation="12dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:clickable="true"
+            android:focusable="true"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
+            <ImageView
+                android:id="@+id/payment_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_payment"
+                android:contentDescription="Payment icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                android:layout_marginEnd="12dp"/>
+
+            <TextView
+                android:id="@+id/payment_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Thanh toán ngay"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:gravity="center"
+                app:layout_constraintStart_toEndOf="@id/payment_icon"
+                app:layout_constraintEnd_toStartOf="@id/payment_arrow"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"/>
+
+            <ImageView
+                android:id="@+id/payment_arrow"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_arrow_forward"
+                android:contentDescription="Arrow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                android:layout_marginStart="8dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</ScrollView>

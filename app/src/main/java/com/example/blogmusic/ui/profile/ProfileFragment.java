@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import androidx.navigation.Navigation;
 import com.example.blogmusic.R;
 
 public class ProfileFragment extends Fragment {
+
 
     @SuppressLint("SetTextI18n")
     @Nullable
@@ -43,6 +45,8 @@ public class ProfileFragment extends Fragment {
         Button btnAddBlog = view.findViewById(R.id.btn_add_post);
         Button btnEditBlog = view.findViewById(R.id.btn_edit_post);
         Button btnDeleteBlog = view.findViewById(R.id.btn_delete_post);
+        Button btnMyOrders = view.findViewById(R.id.btn_my_orders);
+
 
         NavController nav = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
 
@@ -77,6 +81,7 @@ public class ProfileFragment extends Fragment {
             tvEmail.setVisibility(View.VISIBLE);
             btnLogout.setVisibility(View.VISIBLE);
             btnEdit.setVisibility(View.VISIBLE);
+            btnMyOrders.setVisibility(View.VISIBLE);
 
             ViewGroup profileContainer = view.findViewById(R.id.profile_container);
             ViewGroup bottomContainer = view.findViewById(R.id.bottom_container);
@@ -97,9 +102,10 @@ public class ProfileFragment extends Fragment {
 
             btnAddBlog.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_addBlog));
 
-            btnEditBlog.setOnClickListener(v -> Toast.makeText(getContext(), "Tính năng cập nhật hồ sơ đang được phát triển...", Toast.LENGTH_SHORT).show());
+            btnEditBlog.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_editBlog));
 
             btnDeleteBlog.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_deleteBlog));
+            btnMyOrders.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_orders));
 
 
         } else {
@@ -115,6 +121,7 @@ public class ProfileFragment extends Fragment {
 
             btnLogin.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_login));
             btnSignup.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_register));
+
         }
 
         return view;

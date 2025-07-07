@@ -21,7 +21,7 @@
             android:id="@+id/newsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="News Blog"
+            android:text="Bài viết gần đây"
             android:fontFamily="@font/mulish_extrabold"
             android:textSize="24sp"
             android:textColor="@color/black"
@@ -32,7 +32,7 @@
             android:id="@+id/viewAllNews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="View All"
+            android:text="Xem tất cả"
             android:fontFamily="@font/mulish_bolditalic"
             android:textColor="@color/design_default_color_primary"
             android:layout_gravity="end" />
@@ -62,7 +62,7 @@
             android:id="@+id/reviewAlbumTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Review Album"
+            android:text="Đánh giá Album gần đây"
             android:textColor="@color/black"
             android:fontFamily="@font/mulish_extrabold"
             android:textSize="24sp"
@@ -73,7 +73,7 @@
             android:id="@+id/viewAllReviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="View All"
+            android:text="Xem tất cả"
             android:fontFamily="@font/mulish_bolditalic"
             android:textColor="@color/design_default_color_primary"
             android:layout_gravity="end" />
@@ -97,6 +97,5 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginBottom="80dp"/>
-
     </LinearLayout>
 </ScrollView>

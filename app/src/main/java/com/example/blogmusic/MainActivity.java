@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.blogmusic.databinding.ActivityMainBinding;
+import com.example.blogmusic.ui.chatbot.ChatbotFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,15 +43,31 @@ public class MainActivity extends AppCompatActivity {
 
         setupSearchView();
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.navigation_profile && destination.getId() == R.id.chatbotFragment) {
+            if (destination.getId() == R.id.navigation_profile
+                    || destination.getId() == R.id.chatbotFragment
+                    || destination.getId() == R.id.orderFragment
+                    || destination.getId() == R.id.addBlogFragment
+                    || destination.getId() == R.id.deleteBlogFragment
+                    || destination.getId() == R.id.editProfileFragment
+                    || destination.getId() == R.id.editBlogFragment)
+            {
                 binding.searchBarContainer.setVisibility(View.GONE);
             } else {
                 binding.searchBarContainer.setVisibility(View.VISIBLE);
             }
         });
 
-        binding.fabChatbot.setOnClickListener(v -> navController.navigate(R.id.chatbotFragment));
-
+        binding.fabChatbot.setOnClickListener(v -> new ChatbotFragment().show(getSupportFragmentManager(), "chatbot_dialog"));
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.navigation_profile
+                    || destination.getId() == R.id.chatbotFragment
+                    || destination.getId() == R.id.orderFragment)
+            {
+                binding.fabChatbot.setVisibility(View.GONE);
+            } else {
+                binding.fabChatbot.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
     private void setupSearchView() {

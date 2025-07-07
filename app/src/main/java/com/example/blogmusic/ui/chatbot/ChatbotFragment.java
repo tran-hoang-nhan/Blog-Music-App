@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +20,7 @@ import com.example.blogmusic.ui.components.ChatAdapter;
 
 import java.util.ArrayList;
 
-public class ChatbotFragment extends Fragment {
+public class ChatbotFragment extends DialogFragment {
 
     private ChatbotViewModel viewModel;
     private ChatAdapter adapter;
@@ -31,6 +32,9 @@ public class ChatbotFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_chatbot, container, false);
+    }
+    public ChatbotFragment() {
+        setStyle(STYLE_NORMAL, R.style.ChatbotDialogStyle);
     }
 
     @Override
@@ -59,5 +63,16 @@ public class ChatbotFragment extends Fragment {
             }
         });
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT
+            );
+        }
+    }
+
 }
 

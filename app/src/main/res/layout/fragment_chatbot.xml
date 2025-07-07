@@ -1,46 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:paddingTop="60dp"
-    android:paddingBottom="60dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_chat"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="12dp"
-        android:overScrollMode="never"
-        android:paddingBottom="8dp" />
-
-    <!-- Thanh nhập và nút gửi -->
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_chatbot_dialog"
+    android:padding="16dp">
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@drawable/bg_chatbot_dialog">
 
-        <EditText
-            android:id="@+id/edit_input"
-            android:layout_width="0dp"
+        <!-- Tiêu đề và nút đóng -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Nhập câu hỏi..."
-            android:minHeight="48dp"
-            android:padding="8dp"
-            android:background="@drawable/bg_input_box" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end">
 
-        <ImageButton
-            android:id="@+id/btn_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Gửi"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Trợ lý âm nhạc"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#000000" />
+
+            <ImageButton
+                android:id="@+id/btn_close"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Đóng"
+                android:src="@drawable/ic_close"
+                app:tint="#555555"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
+
+        <!-- Danh sách tin nhắn -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_chat"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"
+            android:overScrollMode="never"
             android:padding="8dp"
-            android:src="@drawable/ic_send"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:clipToPadding="false" />
+
+        <!-- Thanh nhập và nút gửi -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/edit_input"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Nhập câu hỏi..."
+                android:minHeight="48dp"
+                android:padding="12dp"
+                android:background="@drawable/bg_input_box"
+                android:textColor="#000000"
+                android:textColorHint="#888888" />
+
+            <ImageButton
+                android:id="@+id/btn_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Gửi"
+                android:src="@drawable/ic_send"
+                app:tint="#007BFF"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
