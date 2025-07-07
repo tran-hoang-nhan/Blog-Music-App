@@ -28,13 +28,17 @@ import retrofit2.Response;
 
 public class OrderFragment extends Fragment {
     private LinearLayout orderContainer;
+    private TextView emptyOrderText;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order, container, false);
+
         orderContainer = view.findViewById(R.id.order_container);
+        emptyOrderText = view.findViewById(R.id.tv_empty_order);
 
         SharedPreferences prefs = requireContext().getSharedPreferences("auth", Context.MODE_PRIVATE);
         int user_id = prefs.getInt("userId", 0);
@@ -58,16 +62,20 @@ public class OrderFragment extends Fragment {
                     List<Order> orders = response.body().getData();
                     LayoutInflater inflater = LayoutInflater.from(getContext());
 
-                    for (Order order : orders) {
-                        View orderView = inflater.inflate(R.layout.item_order, orderContainer, false);
+                    if (orders.isEmpty()) {
+                        emptyOrderText.setVisibility(View.VISIBLE);
+                    } else {
+                        emptyOrderText.setVisibility(View.GONE);
+                        for (Order order : orders) {
+                            View orderView = inflater.inflate(R.layout.item_order, orderContainer, false);
+                            ((TextView) orderView.findViewById(R.id.tv_album_name)).setText("Album: " + order.getAlbum_title());
+                            ((TextView) orderView.findViewById(R.id.tv_order_phone)).setText("SĐT: " + order.getPhone());
+                            ((TextView) orderView.findViewById(R.id.tv_order_quantity)).setText("Số lượng: " + order.getQuantity());
+                            ((TextView) orderView.findViewById(R.id.tv_order_date)).setText("Ngày đặt: " + order.getOrder_date());
+                            ((TextView) orderView.findViewById(R.id.tv_order_status)).setText("Trạng thái: " + order.getStatus());
 
-                        ((TextView) orderView.findViewById(R.id.tv_album_name)).setText("Album: " + order.getAlbum_title());
-                        ((TextView) orderView.findViewById(R.id.tv_order_phone)).setText("SĐT: " + order.getPhone());
-                        ((TextView) orderView.findViewById(R.id.tv_order_quantity)).setText("Số lượng: " + order.getQuantity());
-                        ((TextView) orderView.findViewById(R.id.tv_order_date)).setText("Ngày đặt: " + order.getOrder_date());
-                        ((TextView) orderView.findViewById(R.id.tv_order_status)).setText("Trạng thái: " + order.getStatus());
-
-                        orderContainer.addView(orderView);
+                            orderContainer.addView(orderView);
+                        }
                     }
                 } else {
                     Toast.makeText(getContext(), "Không có đơn hàng nào", Toast.LENGTH_SHORT).show();

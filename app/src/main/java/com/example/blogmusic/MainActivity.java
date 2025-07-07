@@ -49,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
                     || destination.getId() == R.id.addBlogFragment
                     || destination.getId() == R.id.deleteBlogFragment
                     || destination.getId() == R.id.editProfileFragment
-                    || destination.getId() == R.id.editBlogFragment)
+                    || destination.getId() == R.id.editBlogFragment
+                    || destination.getId() == R.id.registerFragment
+                    || destination.getId() == R.id.loginFragment)
             {
                 binding.searchBarContainer.setVisibility(View.GONE);
             } else {

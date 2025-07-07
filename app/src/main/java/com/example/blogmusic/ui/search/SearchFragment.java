@@ -77,11 +77,11 @@ public class SearchFragment extends Fragment {
         });
 
         viewModel.postCount.observe(getViewLifecycleOwner(), count -> {
-            binding.postCountText.setText("Blogs (" + count + ")");
+            binding.postCountText.setText("Bài viết (" + count + ")");
         });
 
         viewModel.reviewCount.observe(getViewLifecycleOwner(), count -> {
-            binding.reviewCountText.setText("Reviews (" + count + ")");
+            binding.reviewCountText.setText("Đánh giá Album (" + count + ")");
         });
     }
 }
