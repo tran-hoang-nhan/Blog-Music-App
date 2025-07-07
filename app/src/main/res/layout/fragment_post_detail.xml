@@ -152,12 +152,16 @@
             <!-- Bài viết liên quan -->
             <TextView
                 android:id="@+id/relatedPostsLabel"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Bài viết cùng tác giả"
+                android:text="Có thể bạn quan tâm"
+                android:fontFamily="@font/mulish_extrabold"
+                android:textSize="24sp"
                 android:textStyle="bold"
-                android:layout_marginTop="24dp"
-                android:textSize="18sp" />
+                android:textColor="@color/primaryTextColor"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/relatedPostsRecyclerView"

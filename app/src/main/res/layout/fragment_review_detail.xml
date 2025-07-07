@@ -220,7 +220,7 @@
                 android:id="@+id/relatedReviewsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Related Reviews"
+                android:text="Có thể bạn quan tâm"
                 android:fontFamily="@font/mulish_extrabold"
                 android:textSize="24sp"
                 android:textStyle="bold"
