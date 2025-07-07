@@ -86,4 +86,14 @@ public interface ApiService {
     Call<EditProfileResponse> updateProfile(@Field("user_id") int userId, @Field("name") String name, @Field("email") String email);
     @POST("chatbot_ai.php")
     Call<BotResponse> sendMessage(@Body ChatRequest request);
+    @FormUrlEncoded
+    @POST("order_album.php")
+    Call<com.example.blogmusic.ui.components.OrderResponse> orderAlbum(
+        @Field("user_id") int userId,
+        @Field("album_id") int albumId,
+        @Field("name") String name,
+        @Field("address") String address,
+        @Field("phone") String phone,
+        @Field("quantity") int quantity
+    );
 }

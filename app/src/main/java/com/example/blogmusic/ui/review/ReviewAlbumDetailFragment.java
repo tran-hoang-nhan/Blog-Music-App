@@ -41,6 +41,17 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.text.InputType;
+import android.widget.EditText;
+import com.example.blogmusic.ui.components.OrderResponse;
+import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.MotionEvent;
 
 public class ReviewAlbumDetailFragment extends Fragment {
 
@@ -48,12 +59,15 @@ public class ReviewAlbumDetailFragment extends Fragment {
     private ImageView albumCoverImage;
     private TextView albumTitleText, albumArtistText, albumScoreText, detailSubtitleText;
     private TextView detailSummaryText, detailTracklistText, detailMainContentText, detailConclusionText, relatedReviewsLabel;
+    private TextView albumPriceText; // Thêm biến này
     private ChipGroup tagsChipGroup;
     private LinearLayout summaryMediaContainer, tracklistMediaContainer, mainMediaContainer, conclusionMediaContainer, tagsMediaContainer;
     private RecyclerView relatedReviewsRecyclerView;
     private ReviewAlbumAdapter reviewAdapter;
 
     private int reviewId;
+    private String albumImageUrl = null;
+    private int albumPrice = 0; // Lưu giá album lấy từ CSDL
 
     @Nullable
     @Override
@@ -79,6 +93,7 @@ public class ReviewAlbumDetailFragment extends Fragment {
         detailConclusionText = view.findViewById(R.id.detail_conclusion_text);
         relatedReviewsLabel = view.findViewById(R.id.relatedReviewsLabel);
         tagsChipGroup = view.findViewById(R.id.tags_chip_group);
+        albumPriceText = view.findViewById(R.id.album_price_text); // Ánh xạ view
 
         summaryMediaContainer = view.findViewById(R.id.summaryMediaContainer);
         tracklistMediaContainer = view.findViewById(R.id.tracklistMediaContainer);
@@ -102,6 +117,9 @@ public class ReviewAlbumDetailFragment extends Fragment {
             increaseViews("review", reviewId);
             fetchReviewDetail(reviewId);
         }
+        // Thêm logic cho nút thanh toán album
+        View btnOrder = view.findViewById(R.id.btn_order_album);
+        btnOrder.setOnClickListener(v -> showOrderDialog(albumImageUrl)); // albumImageUrl sẽ được set khi fetchReviewDetail
     }
 
     private void fetchReviewDetail(int id) {
@@ -112,6 +130,8 @@ public class ReviewAlbumDetailFragment extends Fragment {
             public void onResponse(@NonNull Call<ReviewAlbumDetail> call, @NonNull Response<ReviewAlbumDetail> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ReviewAlbumDetail detail = response.body();
+                    albumImageUrl = detail.getImageCover();
+                    albumPrice = detail.getPrice(); // Lưu giá album
 
                     Glide.with(requireContext())
                             .load(detail.getImageCover())
@@ -121,6 +141,7 @@ public class ReviewAlbumDetailFragment extends Fragment {
                     albumTitleText.setText(detail.getAlbumTitle());
                     albumArtistText.setText(detail.getArtist());
                     albumScoreText.setText(String.valueOf(detail.getScore()));
+                    albumPriceText.setText("Giá: " + detail.getPrice() + " VNĐ"); // Hiển thị giá
                     detailSubtitleText.setText(detail.getSubtitle());
                     detailSummaryText.setText(detail.getSummary());
                     detailMainContentText.setText(detail.getMain_content());
@@ -237,5 +258,132 @@ public class ReviewAlbumDetailFragment extends Fragment {
                 Log.e("Views", "Failed to increase views: " + t.getMessage());
             }
         });
+    }
+
+    private void showOrderDialog(String albumImageUrl) {
+        Context context = requireContext();
+        SharedPreferences prefs = context.getSharedPreferences("auth", Context.MODE_PRIVATE);
+        int userId = prefs.getInt("userId", -1);
+        if (userId == -1) {
+            Toast.makeText(context, "Bạn cần đăng nhập để thanh toán!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // Tạo dialog nhập thông tin thanh toán
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_order_album, null);
+        ImageView imgAlbum = dialogView.findViewById(R.id.img_album_cover);
+        if (albumImageUrl != null && !albumImageUrl.isEmpty()) {
+            Glide.with(context)
+                .load(albumImageUrl)
+                .placeholder(R.drawable.placeholder)
+                .into(imgAlbum);
+        }
+        TextView tvAlbumPrice = dialogView.findViewById(R.id.tv_album_price); // Ánh xạ view giá
+        tvAlbumPrice.setText("Giá: " + albumPrice + " VNĐ"); // Hiển thị đúng giá từ CSDL
+        EditText edtName = dialogView.findViewById(R.id.edt_order_name);
+        EditText edtAddress = dialogView.findViewById(R.id.edt_order_address);
+        EditText edtPhone = dialogView.findViewById(R.id.edt_order_phone);
+        EditText edtQuantity = dialogView.findViewById(R.id.edt_order_quantity);
+        View btnPay = dialogView.findViewById(R.id.btn_confirm_order);
+        // Gợi ý tên từ profile
+        edtName.setText(prefs.getString("userName", ""));
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setTitle("Thanh toán album")
+                .setView(dialogView)
+                .setNegativeButton("Hủy", null)
+                .create();
+        
+        // Thêm animation cho nút thanh toán
+        btnPay.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                Animation scaleDown = AnimationUtils.loadAnimation(context, R.anim.button_scale);
+                v.startAnimation(scaleDown);
+            } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                Animation scaleUp = AnimationUtils.loadAnimation(context, R.anim.button_scale_reverse);
+                v.startAnimation(scaleUp);
+            }
+            return false;
+        });
+        
+        btnPay.setOnClickListener(v -> {
+            String name = edtName.getText().toString().trim();
+            String address = edtAddress.getText().toString().trim();
+            String phone = edtPhone.getText().toString().trim();
+            String quantityStr = edtQuantity.getText().toString().trim();
+            int quantity = 1;
+            try { quantity = Integer.parseInt(quantityStr); } catch (Exception ignored) {}
+            if (name.isEmpty() || address.isEmpty() || phone.isEmpty()) {
+                Toast.makeText(context, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            // Khai báo final cho các biến để dùng trong lambda
+            final int fUserId = userId;
+            final int fReviewId = reviewId;
+            final String fName = name;
+            final String fAddress = address;
+            final String fPhone = phone;
+            final int fQuantity = quantity;
+            showPaymentMethodDialog(() -> {
+                orderAlbum(fUserId, fReviewId, fName, fAddress, fPhone, fQuantity);
+                dialog.dismiss();
+            });
+        });
+        dialog.show();
+    }
+
+    private void showPaymentMethodDialog(Runnable onConfirm) {
+        Context context = requireContext();
+        View paymentView = LayoutInflater.from(context).inflate(R.layout.dialog_payment_method, null);
+        AlertDialog paymentDialog = new AlertDialog.Builder(context)
+                .setView(paymentView)
+                .create();
+        View btnConfirm = paymentView.findViewById(R.id.btn_confirm_payment);
+        
+        // Thêm animation cho nút xác nhận thanh toán
+        btnConfirm.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                Animation scaleDown = AnimationUtils.loadAnimation(context, R.anim.button_scale);
+                v.startAnimation(scaleDown);
+            } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                Animation scaleUp = AnimationUtils.loadAnimation(context, R.anim.button_scale_reverse);
+                v.startAnimation(scaleUp);
+            }
+            return false;
+        });
+        
+        btnConfirm.setOnClickListener(v -> {
+            // Có thể lấy phương thức đã chọn ở đây nếu muốn xử lý riêng
+            paymentDialog.dismiss();
+            onConfirm.run();
+        });
+        paymentDialog.show();
+    }
+
+    private void orderAlbum(int userId, int albumId, String name, String address, String phone, int quantity) {
+        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
+        apiService.orderAlbum(userId, albumId, name, address, phone, quantity).enqueue(new Callback<OrderResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<OrderResponse> call, @NonNull Response<OrderResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().isStatus()) {
+                    showOrderSuccessDialog();
+                } else {
+                    Toast.makeText(getContext(), "Thanh toán thất bại!", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<OrderResponse> call, @NonNull Throwable t) {
+                Toast.makeText(getContext(), "Lỗi kết nối khi thanh toán!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showOrderSuccessDialog() {
+        Context context = requireContext();
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_order_success, null);
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setView(dialogView)
+                .create();
+        Button btnClose = dialogView.findViewById(R.id.btn_close_success);
+        btnClose.setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
     }
 }

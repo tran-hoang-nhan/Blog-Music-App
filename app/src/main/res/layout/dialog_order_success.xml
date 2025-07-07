@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="32dp"
+    android:background="@drawable/bg_dialog_music">
+
+    <ImageView
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:src="@drawable/ic_heart_filled"
+        android:tint="@color/orange_light"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đặt hàng thành công!"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/mulish_extrabold"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cảm ơn bạn đã ủng hộ nghệ sĩ và BlogMusic!\nChúng tôi sẽ liên hệ xác nhận đơn hàng sớm nhất."
+        android:textSize="16sp"
+        android:textColor="@color/secondaryTextColor"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btn_close_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đóng"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/orange_light"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/mulish_bold"/>
+
+</LinearLayout> 

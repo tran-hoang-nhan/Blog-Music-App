@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal"
+    android:background="@drawable/bg_dialog_music">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chọn phương thức thanh toán"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/mulish_extrabold"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginBottom="16dp"/>
+
+    <RadioGroup
+        android:id="@+id/radio_payment_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radio_cod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thanh toán khi nhận hàng (COD)"
+            android:checked="true"
+            android:padding="8dp"/>
+
+        <RadioButton
+            android:id="@+id/radio_vnpay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VNPay"
+            android:padding="8dp"/>
+
+        <RadioButton
+            android:id="@+id/radio_momo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MoMo"
+            android:padding="8dp"/>
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/btn_confirm_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_button_payment_modern"
+        android:elevation="12dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_payment"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="Payment icon" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Xác nhận thanh toán"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:fontFamily="@font/mulish_bold"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:gravity="center" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_arrow_forward"
+            android:layout_marginStart="8dp"
+            android:contentDescription="Arrow" />
+
+    </LinearLayout>
+
+</LinearLayout> 

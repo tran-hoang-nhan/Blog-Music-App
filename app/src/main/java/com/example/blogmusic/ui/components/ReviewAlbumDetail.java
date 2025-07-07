@@ -6,10 +6,11 @@ import java.util.Map;
 public class ReviewAlbumDetail {
     private final int reviewId;
     private final double score;
+    private final int price; // Thêm trường đơn giá
     private final String album_title, image_cover, summary ,subtitle, tracklist, main_content, artist, release_date, conclusion, tags;
     private final Map<String, List<Media>> media;
 
-    public ReviewAlbumDetail(int reviewId, String album_title, String image_cover, String subtitle, String summary, String tracklist, String release_date, String artist,String main_content, double score, String conclusion, String tags, Map<String, List<Media>> media) {
+    public ReviewAlbumDetail(int reviewId, String album_title, String image_cover, String subtitle, String summary, String tracklist, String release_date, String artist,String main_content, double score, String conclusion, String tags, Map<String, List<Media>> media, int price) {
         this.reviewId = reviewId;
         this.album_title = album_title;
         this.image_cover = image_cover;
@@ -23,6 +24,7 @@ public class ReviewAlbumDetail {
         this.conclusion = conclusion;
         this.tags = tags;
         this.media = media;
+        this.price = price;
     }
 
     public int  getReviewId() { return reviewId; }
@@ -38,4 +40,5 @@ public class ReviewAlbumDetail {
     public String getConclusion() { return conclusion; }
     public String getTags() { return tags; }
     public Map<String, List<Media>> getMedia() { return media; }
+    public int getPrice() { return price; }
 }

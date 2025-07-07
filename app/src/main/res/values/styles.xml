@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Style cho nút thanh toán -->
+    <style name="PaymentButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@drawable/bg_button_payment_modern</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/mulish_bold</item>
+        <item name="android:elevation">8dp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+</resources> 
