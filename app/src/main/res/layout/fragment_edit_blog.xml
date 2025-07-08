@@ -29,7 +29,7 @@
             android:id="@+id/btn_load"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tải nội dung" />
+            android:text="Lấy nội dung" />
 
         <!-- Thông tin chung -->
         <EditText
