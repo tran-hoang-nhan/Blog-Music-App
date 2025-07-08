@@ -68,6 +68,8 @@ public class OrderFragment extends Fragment {
                         emptyOrderText.setVisibility(View.GONE);
                         for (Order order : orders) {
                             View orderView = inflater.inflate(R.layout.item_order, orderContainer, false);
+                            ((TextView) orderView.findViewById(R.id.tv_user_id)).setText("User ID: " + order.getUser_id());
+                            ((TextView) orderView.findViewById(R.id.tv_user_name)).setText("Tên người dùng: " + order.getName());
                             ((TextView) orderView.findViewById(R.id.tv_album_name)).setText("Album: " + order.getAlbum_title());
                             ((TextView) orderView.findViewById(R.id.tv_order_phone)).setText("SĐT: " + order.getPhone());
                             ((TextView) orderView.findViewById(R.id.tv_order_quantity)).setText("Số lượng: " + order.getQuantity());

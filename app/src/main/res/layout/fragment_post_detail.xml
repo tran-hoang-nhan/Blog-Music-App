@@ -57,7 +57,8 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="72dp">
+            android:paddingBottom="72dp"
+            android:textColor="@color/black">
 
             <!-- Tiêu đề -->
             <TextView
@@ -75,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Author"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@color/black"
                 android:layout_marginTop="4dp"/>
 
             <TextView
@@ -83,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@color/black"
                 android:layout_marginBottom="16dp"/>
 
             <!-- Các phần nội dung -->
@@ -106,6 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Introduction"
+                android:textColor="@color/black"
                 android:layout_marginTop="16dp"/>
 
             <LinearLayout
@@ -119,6 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Main Content"
+                android:textColor="@color/black"
                 android:layout_marginTop="16dp"/>
 
             <LinearLayout
@@ -132,6 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Conclusion"
+                android:textColor="@color/black"
                 android:layout_marginTop="16dp"/>
 
             <LinearLayout
