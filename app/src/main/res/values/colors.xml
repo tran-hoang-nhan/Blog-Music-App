@@ -14,5 +14,6 @@
     <color name="blue_light">#42A5F5</color>
     <color name="red_light">#EF5350</color>
     <color name="brown_dark">#6D4C41</color>
-
+    <color name="card_admin">#A5CC6B</color>
+    <color name="card_user">#FFFFFF</color>
 </resources>

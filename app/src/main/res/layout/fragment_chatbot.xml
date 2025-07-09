@@ -6,15 +6,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_chatbot_dialog"
-    android:padding="16dp">
+    android:layout_margin="16dp">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_chatbot_dialog">
 
-        <!-- Tiêu đề và nút đóng -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

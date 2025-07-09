@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.blogmusic.R;
@@ -29,6 +31,7 @@ import retrofit2.Response;
 public class OrderFragment extends Fragment {
     private LinearLayout orderContainer;
     private TextView emptyOrderText;
+    private String role = "user";
 
 
     @Nullable
@@ -42,11 +45,11 @@ public class OrderFragment extends Fragment {
 
         SharedPreferences prefs = requireContext().getSharedPreferences("auth", Context.MODE_PRIVATE);
         int user_id = prefs.getInt("userId", 0);
-        String role = prefs.getString("role", "user");
-
+        role = prefs.getString("role", "user");
         if (role.equals("admin")) {
             user_id = 0;
         }
+
         fetchOrders(user_id);
         return view;
     }
@@ -75,6 +78,14 @@ public class OrderFragment extends Fragment {
                             ((TextView) orderView.findViewById(R.id.tv_order_quantity)).setText("Số lượng: " + order.getQuantity());
                             ((TextView) orderView.findViewById(R.id.tv_order_date)).setText("Ngày đặt: " + order.getOrder_date());
                             ((TextView) orderView.findViewById(R.id.tv_order_status)).setText("Trạng thái: " + order.getStatus());
+
+                            CardView cardOrder = orderView.findViewById(R.id.card_order);
+                            int bgColor = order.getRole().equalsIgnoreCase("admin")
+                                    ? ContextCompat.getColor(requireContext(), R.color.card_admin)
+                                    : ContextCompat.getColor(requireContext(), R.color.card_user);
+
+
+                            cardOrder.setCardBackgroundColor(bgColor);
 
                             orderContainer.addView(orderView);
                         }

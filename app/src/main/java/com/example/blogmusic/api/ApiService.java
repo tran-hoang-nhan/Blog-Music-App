@@ -16,6 +16,7 @@ import com.example.blogmusic.ui.components.ReviewAlbumResponse;
 import com.example.blogmusic.ui.components.SearchResponse;
 import com.example.blogmusic.ui.components.AuthResponse.LoginResponse;
 import com.example.blogmusic.ui.components.AuthResponse.RegisterResponse;
+import com.example.blogmusic.ui.components.User;
 
 import java.util.List;
 import java.util.Map;
@@ -95,5 +96,10 @@ public interface ApiService {
     Call<AdminResponse> editBlog(@Body Map<String, String> data);
     @GET("admin/edit_blog.php")
     Call<List<Integer>> getBlogIds(@Query("type") String type);
+    @GET("admin/user.php")
+    Call<List<User>> getAllUsers();
+    @FormUrlEncoded
+    @POST("admin/delete_user.php")
+    Call<AdminResponse> deleteUser(@Field("user_id") int userId);
 
 }

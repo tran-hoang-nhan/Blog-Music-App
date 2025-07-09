@@ -8,6 +8,8 @@
     android:background="@color/lightBackgroundColor"
     android:fitsSystemWindows="true"
     tools:context=".ui.review.ReviewAlbumDetailFragment"
+    android:paddingTop="60dp"
+    android:paddingBottom="15dp"
     android:clipToPadding="false">
 
     <com.google.android.material.appbar.AppBarLayout

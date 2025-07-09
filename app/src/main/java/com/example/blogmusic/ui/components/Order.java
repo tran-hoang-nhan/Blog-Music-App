@@ -11,8 +11,9 @@ public class Order {
     private final int quantity;
     private final String order_date;
     private final String status;
+    private final String role;
 
-    public Order(int id, int user_id, int album_id, String album_title, String name, String address, String phone, int quantity, String orderDate, String status) {
+    public Order(int id, int user_id, int album_id, String album_title, String name, String address, String phone, int quantity, String orderDate, String status, String role) {
         this.id = id;
         this.user_id = user_id;
         this.album_id = album_id;
@@ -23,6 +24,7 @@ public class Order {
         this.quantity = quantity;
         this.order_date = orderDate;
         this.status = status;
+        this.role = role;
     }
 
     public int getAlbum_id() {
@@ -64,4 +66,5 @@ public class Order {
     public String getStatus() {
         return status;
     }
+    public String getRole() { return role; }
 }

@@ -1,103 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="#CC000000"
-    android:padding="24dp">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/profile_avatar"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginBottom="16dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_background_profile"
-        app:shapeAppearanceOverlay="@style/CircleImageViewStyle" />
-
-    <TextView
-        android:id="@+id/tv_user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tên người dùng"
-        android:textColor="#FFFFFF"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="4dp" />
-
-    <TextView
-        android:id="@+id/tv_user_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="email@example.com"
-        android:textColor="#CCCCCC"
-        android:textSize="16sp"
-        android:layout_marginBottom="20dp" />
-
-    <!-- Button: Người dùng -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_edit_profile"
+    <LinearLayout
+        android:id="@+id/layout_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chỉnh sửa hồ sơ"
-        android:layout_marginBottom="12dp"
-        app:cornerRadius="16dp"
-        app:backgroundTint="@color/orange_light"
-        android:textColor="@android:color/white" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#CC000000"
+        android:paddingBottom="50dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
 
-    <!-- Button: Admin - Add -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_add_post"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="➕ Thêm bài viết"
-        android:visibility="gone"
-        app:cornerRadius="16dp"
-        app:backgroundTint="@color/blue_light"
-        android:textColor="@android:color/white"
-        android:layout_marginBottom="8dp" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profile_avatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_background_profile"
+            app:shapeAppearanceOverlay="@style/CircleImageViewStyle" />
 
-    <!-- Button: Admin - Edit -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_edit_post"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="✏️ Sửa bài viết"
-        android:visibility="gone"
-        app:cornerRadius="16dp"
-        app:backgroundTint="@color/blue_light"
-        android:textColor="@android:color/white"
-        android:layout_marginBottom="8dp" />
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên người dùng"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
 
-    <!-- Button: Admin - Delete -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_delete_post"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="🗑️ Xoá bài viết"
-        android:visibility="gone"
-        app:cornerRadius="16dp"
-        app:backgroundTint="@color/red_light"
-        android:textColor="@android:color/white"
-        android:layout_marginBottom="20dp" />
+        <TextView
+            android:id="@+id/tv_user_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email@example.com"
+            android:textColor="#CCCCCC"
+            android:textSize="16sp"
+            android:layout_marginBottom="20dp" />
 
-    <!-- Button: Đăng xuất -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="🚪 Đăng xuất"
-        app:cornerRadius="16dp"
-        app:backgroundTint="@color/brown_dark"
-        android:textColor="@android:color/white" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chỉnh sửa hồ sơ"
+            android:layout_marginBottom="12dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/orange_light"
+            android:textColor="@android:color/white" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_my_orders"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cornerRadius="16dp"
-        android:text="Đơn hàng của tôi" />
-</LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="➕ Thêm bài viết"
+            android:visibility="gone"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/blue_light"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="✏️ Sửa bài viết"
+            android:visibility="gone"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/blue_light"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_manage_users"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quản lý người dùng"
+            android:visibility="gone"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/blue_light"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🗑️ Xoá bài viết"
+            android:visibility="gone"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/red_light"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="20dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🚪 Đăng xuất"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/brown_dark"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_my_orders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cornerRadius="16dp"
+            android:text="Đơn hàng của tôi" />
+    </LinearLayout>
+</ScrollView>

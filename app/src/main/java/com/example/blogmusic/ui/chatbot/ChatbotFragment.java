@@ -42,13 +42,13 @@ public class ChatbotFragment extends DialogFragment {
         recyclerView = view.findViewById(R.id.recycler_chat);
         editInput = view.findViewById(R.id.edit_input);
         ImageButton btnSend = view.findViewById(R.id.btn_send);
+        ImageButton btnClose = view.findViewById(R.id.btn_close);
+
 
         viewModel = new ViewModelProvider(this).get(ChatbotViewModel.class);
         adapter = new ChatAdapter(new ArrayList<>());
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
         viewModel.getMessages().observe(getViewLifecycleOwner(), messages -> {
             adapter.setMessages(messages); // Cập nhật dữ liệu, KHÔNG tạo lại adapter
             recyclerView.scrollToPosition(messages.size() - 1);
@@ -62,6 +62,10 @@ public class ChatbotFragment extends DialogFragment {
                 editInput.setText("");
             }
         });
+
+
+        btnClose.setOnClickListener(v -> dismiss());
+
     }
     @Override
     public void onStart() {

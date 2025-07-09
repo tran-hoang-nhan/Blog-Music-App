@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
                     || destination.getId() == R.id.editProfileFragment
                     || destination.getId() == R.id.editBlogFragment
                     || destination.getId() == R.id.registerFragment
-                    || destination.getId() == R.id.loginFragment)
+                    || destination.getId() == R.id.loginFragment
+                    || destination.getId() == R.id.userFragment)
             {
                 binding.searchBarContainer.setVisibility(View.GONE);
             } else {
@@ -63,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.navigation_profile
                     || destination.getId() == R.id.chatbotFragment
-                    || destination.getId() == R.id.orderFragment)
+                    || destination.getId() == R.id.orderFragment
+                    || destination.getId() == R.id.userFragment)
             {
                 binding.fabChatbot.setVisibility(View.GONE);
             } else {

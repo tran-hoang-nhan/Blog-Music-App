@@ -11,11 +11,13 @@
         android:label="News"
         tools:layout="@layout/fragment_news" />
 
+
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.blogmusic.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
+
 
     <fragment
         android:id="@+id/navigation_profile"
@@ -47,13 +49,19 @@
         <action
             android:id="@+id/action_profile_to_editBlog"
             app:destination="@id/editBlogFragment" />
+        <action
+            android:id="@+id/action_profile_to_user"
+            app:destination="@id/userFragment" />
     </fragment>
+
 
     <fragment
         android:id="@+id/navigation_review"
         android:name="com.example.blogmusic.ui.review.ReviewFragment"
         android:label="Reviews"
-        tools:layout="@layout/fragment_review" />
+        tools:layout="@layout/fragment_review">
+    </fragment>
+
 
     <fragment
         android:id="@+id/postDetailFragment"
@@ -65,6 +73,7 @@
             app:argType="integer" />
     </fragment>
 
+
     <fragment
         android:id="@+id/reviewDetailFragment"
         android:name="com.example.blogmusic.ui.review.ReviewAlbumDetailFragment"
@@ -75,11 +84,14 @@
             app:argType="integer" />
     </fragment>
 
+
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.blogmusic.ui.search.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+    </fragment>
+
 
     <fragment
         android:id="@+id/loginFragment"
@@ -91,6 +103,7 @@
             app:destination="@id/navigation_profile" />
     </fragment>
 
+
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.blogmusic.ui.auth.RegisterFragment"
@@ -101,16 +114,23 @@
             app:destination="@id/loginFragment" />
     </fragment>
 
+
     <fragment
         android:id="@+id/addBlogFragment"
         android:name="com.example.blogmusic.ui.admin.AddBlogFragment"
         android:label="Thêm bài viết"
-        tools:layout="@layout/fragment_add_blog" />
+        tools:layout="@layout/fragment_add_blog">
+    </fragment>
+
+
     <fragment
         android:id="@+id/deleteBlogFragment"
         android:name="com.example.blogmusic.ui.admin.DeleteBlogFragment"
         android:label="Xóa Bài Viết"
-        tools:layout="@layout/fragment_delete_blog" />
+        tools:layout="@layout/fragment_delete_blog">
+    </fragment>
+
+
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.blogmusic.ui.profile.EditProfileFragment"
@@ -120,6 +140,8 @@
             android:id="@+id/action_edit_to_profile"
             app:destination="@id/navigation_profile" />
     </fragment>
+
+
     <fragment
         android:id="@+id/editBlogFragment"
         android:name="com.example.blogmusic.ui.admin.EditBlogFragment"
@@ -127,15 +149,28 @@
         tools:layout="@layout/fragment_edit_blog">
     </fragment>
 
+
     <fragment
         android:id="@+id/chatbotFragment"
         android:name="com.example.blogmusic.ui.chatbot.ChatbotFragment"
         android:label="Chatbot AI"
-        tools:layout="@layout/fragment_chatbot" />
+        tools:layout="@layout/fragment_chatbot" >
+    </fragment>
+
+
     <fragment
         android:id="@+id/orderFragment"
         android:name="com.example.blogmusic.ui.profile.OrderFragment"
         android:label="Order"
-        tools:layout="@layout/fragment_order" />
+        tools:layout="@layout/fragment_order">
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.blogmusic.ui.admin.UserFragment"
+        android:label="User"
+        tools:layout="@layout/fragment_user">
+    </fragment>
 
 </navigation>

@@ -46,6 +46,7 @@ public class ProfileFragment extends Fragment {
         Button btnEditBlog = view.findViewById(R.id.btn_edit_post);
         Button btnDeleteBlog = view.findViewById(R.id.btn_delete_post);
         Button btnMyOrders = view.findViewById(R.id.btn_my_orders);
+        Button btnManageUsers = view.findViewById(R.id.btn_manage_users);
 
 
         NavController nav = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
@@ -63,11 +64,13 @@ public class ProfileFragment extends Fragment {
                     tvName.setText(name);
                 }
                 btnAddBlog.setVisibility(View.VISIBLE);
+                btnManageUsers.setVisibility(View.VISIBLE);
                 btnEditBlog.setVisibility(View.VISIBLE);
                 btnDeleteBlog.setVisibility(View.VISIBLE);
             } else {
                 tvName.setText(name);
                 btnAddBlog.setVisibility(View.GONE);
+                btnManageUsers.setVisibility(View.GONE);
                 btnEditBlog.setVisibility(View.GONE);
                 btnDeleteBlog.setVisibility(View.GONE);
             }
@@ -98,14 +101,11 @@ public class ProfileFragment extends Fragment {
             });
 
             btnEdit.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_editProfile));
-
-
             btnAddBlog.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_addBlog));
-
             btnEditBlog.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_editBlog));
-
             btnDeleteBlog.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_deleteBlog));
             btnMyOrders.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_orders));
+            btnManageUsers.setOnClickListener(v -> nav.navigate(R.id.action_profile_to_user));
 
 
         } else {
