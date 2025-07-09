@@ -31,7 +31,6 @@ public class AddBlogFragment extends Fragment {
 
     private EditText edtTitle, edtAuthor, edtImageUrl;
     private Spinner spinnerType, spinnerGenre;
-    private Button btnSubmit;
 
     // Post fields
     private EditText edtPostSubtitle, edtPostIntro, edtPostContent, edtPostConclusion, edtPostTags;
@@ -55,7 +54,7 @@ public class AddBlogFragment extends Fragment {
         edtImageUrl = view.findViewById(R.id.edt_image_url);
         spinnerType = view.findViewById(R.id.spinner_type);
         spinnerGenre = view.findViewById(R.id.spinner_genre);
-        btnSubmit = view.findViewById(R.id.btn_submit);
+        Button btnSubmit = view.findViewById(R.id.btn_submit);
 
         layoutPost = view.findViewById(R.id.layout_post);
         layoutReview = view.findViewById(R.id.layout_review);

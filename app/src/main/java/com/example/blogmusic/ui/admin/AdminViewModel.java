@@ -105,7 +105,7 @@ public class AdminViewModel extends ViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     userList.setValue(response.body());
                 } else {
-                    userList.setValue(null); // Hoặc set rỗng tùy ý
+                    userList.setValue(null);
                 }
             }
 

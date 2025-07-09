@@ -1,7 +1,7 @@
 package com.example.blogmusic.ui.components;
 
 public class ChatMessage {
-    private final String sender; // "user" hoặc "bot"
+    private final String sender;
     private final String text;
 
     public ChatMessage(String sender, String text) {

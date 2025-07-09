@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightBackgroundColor"
-    android:fitsSystemWindows="true"
     tools:context=".ui.review.ReviewAlbumDetailFragment"
     android:paddingTop="60dp"
     android:paddingBottom="15dp"
@@ -55,7 +54,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:orientation="vertical"
-                android:padding="24dp">
+                android:padding="24dp"
+                android:clipToPadding="false">
 
                 <TextView
                     android:id="@+id/album_title_text"

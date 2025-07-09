@@ -83,8 +83,6 @@ public class OrderFragment extends Fragment {
                             int bgColor = order.getRole().equalsIgnoreCase("admin")
                                     ? ContextCompat.getColor(requireContext(), R.color.card_admin)
                                     : ContextCompat.getColor(requireContext(), R.color.card_user);
-
-
                             cardOrder.setCardBackgroundColor(bgColor);
 
                             orderContainer.addView(orderView);

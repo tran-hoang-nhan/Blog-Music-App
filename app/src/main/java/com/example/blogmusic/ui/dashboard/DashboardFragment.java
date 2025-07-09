@@ -43,8 +43,7 @@ public class DashboardFragment extends Fragment {
             int reviewCount = reviewAlbumAdapter.getItemCount();
 
             if (postCount > 0) {
-                currentPosition = (currentPosition + 1) % postCount;
-                binding.newsRecyclerView.smoothScrollToPosition(currentPosition);
+                binding.newsRecyclerView.smoothScrollToPosition(currentPosition% postCount);
             }
 
             if (reviewCount > 0) {
