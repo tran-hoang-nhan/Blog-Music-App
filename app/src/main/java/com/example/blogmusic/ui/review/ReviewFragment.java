@@ -64,13 +64,13 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getText().toString()) {
-                    case "Recent":
+                    case "Mới nhất":
                         viewModel.fetchReviewsBySort("recent");
                         break;
-                    case "Popular":
+                    case "Phổ biến":
                         viewModel.fetchReviewsBySort("views");
                         break;
-                    case "Favorited":
+                    case "Yêu thích":
                         viewModel.fetchReviewsBySort("favorites");
                         break;
                 }

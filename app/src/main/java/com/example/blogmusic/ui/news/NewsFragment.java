@@ -67,13 +67,13 @@ public class NewsFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getText().toString()) {
-                    case "Recent":
+                    case "Mới nhất":
                         viewModel.fetchPostsBySort("recent");
                         break;
-                    case "Popular":
+                    case "Phổ biến":
                         viewModel.fetchPostsBySort("views");
                         break;
-                    case "Favorited":
+                    case "Yêu thích":
                         viewModel.fetchPostsBySort("favorites");
                         break;
                 }
