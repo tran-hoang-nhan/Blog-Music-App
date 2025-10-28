@@ -33,7 +33,7 @@ A comprehensive Android application for music enthusiasts featuring blog posts, 
 - **Server**: PHP 7.4+
 - **Database**: MySQL
 - **API**: RESTful API with JSON responses
-- **Authentication**: JWT tokens + Google OAuth
+- **Authentication**: SharedPreferences + Google OAuth
 - **File Storage**: Local server storage for images
 
 ### Key Libraries
